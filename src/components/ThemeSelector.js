@@ -29,6 +29,7 @@ export default function ThemeSelector() {
     "luxury",
     "dracula",
     "cmyk",
+    "dim",
     "autumn",
     "business",
     "acid",
