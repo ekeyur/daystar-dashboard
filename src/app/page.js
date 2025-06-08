@@ -67,7 +67,7 @@ export default function Home() {
       <div className="flex flex-col md:flex-row gap-4 w-full">
         <section className="w-full md:w-1/2">
           <h2 className="font-bold text-xl md:text-3xl text-center my-4">
-            2025 Fundraiser (Mini) - Campaign Tools
+            2025 Fundraiser
           </h2>
           <div className="overflow-x-auto font-bold">
             <table className="table w-full text-md md:text-xl">
