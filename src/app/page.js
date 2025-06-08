@@ -1,103 +1,168 @@
 import Image from "next/image";
+import ThemeSelector from "@/components/ThemeSelector";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const currentDate = new Date();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  // Format date as "Thu, May 29, 2025"
+  const formattedDate = currentDate.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  // Format time as "12:38 PM"
+  const formattedTime = currentDate.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+  return (
+    <>
+      <nav className="navbar bg-base-100 shadow-sm">
+        <div className="navbar-start">
+          <Image src="/daystar_logo.png" alt="Logo" width={120} height={160} />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        <div className="navbar-center hidden lg:flex"></div>
+        <div className="navbar-end">
+          <div className="flex items-end flex-col font-bold gap-2">
+            <div className="text-sm md:text-medium text-accent">
+              {formattedDate}
+            </div>
+            <div className="text-sm md:text-medium text-accent">
+              {formattedTime}
+            </div>
+            <div className="text-md md:text-xl text-secondary">
+              Web Users : {8}
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <h1 className="font-bold text-xl md:text-5xl text-primary my-8 text-center">
+        St. Louis - Now St. Louis Tornado $100K : 05/19/25 - 25215010
+      </h1>
+
+      <section className="">
+        <div className="flex flex-wrap items-center justify-around md:justify-center md:gap-8 my-2 md:my-6">
+          <div className="font-bold text-2xl md:text-4xl text-secondary">
+            WEB : {`54`}
+          </div>
+          <div
+            className="font-bold radial-progress bg-primary text-primary-content border-primary border-4"
+            style={{ "--value": 70 } /* as React.CSSProperties */}
+            aria-valuenow={70}
+            role="progressbar"
+          >
+            70%
+          </div>
+          <div className="font-bold text-4xl md:text-4xl text-secondary">
+            ${`11,702.70`}
+          </div>
+        </div>
+      </section>
+      <div className="flex flex-col md:flex-row gap-4 w-full">
+        <section className="w-full md:w-1/2">
+          <h2 className="font-bold text-xl md:text-3xl text-center my-4">
+            2025 Fundraiser (Mini) - Campaign Tools
+          </h2>
+          <div className="overflow-x-auto font-bold">
+            <table className="table w-full text-md md:text-xl">
+              {/* head */}
+              <thead>
+                <tr className="text-xs md:text-2xl">
+                  <th>APPEAL</th>
+                  <th>US</th>
+                  <th>CA</th>
+                  <th>INTL</th>
+                  <th>TOTAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* row 1 */}
+                <tr className="bg-base-200">
+                  <th>$0 - $0.01</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                {/* row 2 */}
+                <tr>
+                  <th>$0.02 - $1,000</th>
+                  <td>50</td>
+                  <td>2</td>
+                  <td>0</td>
+                  <td>52</td>
+                </tr>
+                {/* row 3 */}
+                <tr>
+                  <th>$1000 - $50,000</th>
+                  <td>2</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>2</td>
+                </tr>
+                <tr className="text-xs md:text-2xl bg-base-200">
+                  <th>TOTAL</th>
+                  <td>52</td>
+                  <td>2</td>
+                  <td>0</td>
+                  <td>54</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section className="w-full md:w-1/2">
+          <h2 className="font-bold text-xl md:text-3xl text-center my-4">
+            2025 Fundraiser (Mini) - Campaign Tools
+          </h2>
+          <div className="overflow-x-auto font-bold">
+            <table className="table w-full text-mx md:text-xl">
+              {/* head */}
+
+              <thead>
+                <tr />
+                <tr className="text-xs md:text-2xl">
+                  <th />
+                  <th>PLEDGES</th>
+                  <th>PERCENTAGE</th>
+                  <th>DOLLARS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="bg-base-200">
+                  <th>LIVE</th>
+                  <td>1,282</td>
+                  <td>78</td>
+                  <td>$217,356</td>
+                </tr>
+                {/* row 2 */}
+                <tr>
+                  <th>WEB</th>
+                  <td>352</td>
+                  <td>22</td>
+                  <td>$62,647</td>
+                </tr>
+
+                <tr className="text-xs md:text-2xl bg-base-200">
+                  <th>TOTAL</th>
+                  <td>1634</td>
+                  <td>100</td>
+                  <td>$280,004</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+      <section className="absolute bottom-4 right-2">
+        <ThemeSelector />
+      </section>
+    </>
   );
 }
