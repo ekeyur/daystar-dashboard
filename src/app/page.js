@@ -62,7 +62,7 @@ export default function Home() {
         </div>
       </section>
       <div className="flex flex-col md:flex-row gap-4 w-full">
-        <section className="w-full md:w-1/2">
+        <section className="w-full">
           <h2 className="font-bold text-xl md:text-3xl text-center my-4">
             2025 Fundraiser
           </h2>
@@ -114,6 +114,74 @@ export default function Home() {
             </table>
           </div>
         </section>
+      </div>
+      <div className="flex flex-col md:flex-row gap-4 w-full mt-4">
+        <section className="w-full md:w-1/2">
+          <h2 className="font-bold text-xl md:text-3xl text-center my-4">
+            2025 Fundraiser Sources
+          </h2>
+          <div className="overflow-x-auto font-bold">
+            <table className="table w-full text-md md:text-xl">
+              {/* head */}
+              <thead>
+                <tr className="text-xs md:text-2xl">
+                  <th>USD</th>
+                  <th>TOTAL</th>
+                  <th>US</th>
+                  <th>CA & INTL</th>
+                  <th>WEB</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* row 1 */}
+                <tr className="bg-base-200">
+                  <th>One Time Gift</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                {/* row 2 */}
+                <tr>
+                  <th>Recurring Received</th>
+                  <td>50</td>
+                  <td>2</td>
+                  <td>0</td>
+                  <td>52</td>
+                </tr>
+                {/* row 3 */}
+                <tr>
+                  <th>Recurring Potential</th>
+                  <td>2</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>2</td>
+                </tr>
+                <tr>
+                  <th>Monthly Pledged</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>One Time Pledged</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <th>Total</th>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
         <section className="w-full md:w-1/2">
           <h2 className="font-bold text-xl md:text-3xl text-center my-4">
             2025 Fundraiser (Mini) - Campaign Tools
@@ -157,73 +225,6 @@ export default function Home() {
           </div>
         </section>
       </div>
-
-      <section className="w-full md:w-1/2">
-        <h2 className="font-bold text-xl md:text-3xl text-center my-4">
-          2025 Fundraiser Sources
-        </h2>
-        <div className="overflow-x-auto font-bold">
-          <table className="table w-full text-md md:text-xl">
-            {/* head */}
-            <thead>
-              <tr className="text-xs md:text-2xl">
-                <th>USD</th>
-                <th>TOTAL</th>
-                <th>US</th>
-                <th>CA & INTL</th>
-                <th>WEB</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              <tr className="bg-base-200">
-                <th>One Time Gift</th>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-              </tr>
-              {/* row 2 */}
-              <tr>
-                <th>Recurring Received</th>
-                <td>50</td>
-                <td>2</td>
-                <td>0</td>
-                <td>52</td>
-              </tr>
-              {/* row 3 */}
-              <tr>
-                <th>Recurring Potential</th>
-                <td>2</td>
-                <td>0</td>
-                <td>0</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <th>Monthly Pledged</th>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-              </tr>
-              <tr>
-                <th>One Time Pledged</th>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-              </tr>
-              <tr>
-                <th>Total</th>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-                <td>0</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
       <section className="absolute bottom-4 right-2">
         <ThemeSelector />
       </section>
