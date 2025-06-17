@@ -20,7 +20,7 @@ export default function Home() {
   });
 
   return (
-    <>
+    <div className="px-8">
       <nav className="navbar bg-base-100 shadow-sm">
         <div className="navbar-start">
           <Image src="/daystar_logo.png" alt="Logo" width={120} height={160} />
@@ -33,35 +33,35 @@ export default function Home() {
               {formattedDate}, {formattedTime}
             </div>
             <div className="text-md md:text-medium text-secondary">
-              Web Users : {8}
+              web users : {8}
             </div>
           </div>
         </div>
       </nav>
+      <div className="flex w-full items-center justify-between flex-wrap">
+        <h1 className="font-bold text-xl md:text-4xl text-primary my-8 text-center">
+          St. Louis - Now St. Louis Tornado $100K : 05/19/25 - 25215010
+        </h1>
 
-      <h1 className="font-bold text-xl md:text-4xl text-primary my-8 text-center">
-        St. Louis - Now St. Louis Tornado $100K : 05/19/25 - 25215010
-      </h1>
-
-      <section className="">
-        <div className="flex flex-wrap items-center justify-around md:justify-center md:gap-8 my-2 md:my-4">
+        <div className="flex flex-wrap items-center justify-between lg:justify-center gap-2">
           <div className="font-bold text-2xl md:text-4xl text-secondary">
-            WEB : {`54`}
+            {`54`}
           </div>
           <div
-            className="font-bold radial-progress bg-primary text-primary-content border-primary border-4"
-            style={{ "--value": 100 } /* as React.CSSProperties */}
+            className="font-bold radial-progress bg-primary text-primary-content border-primary border-4 flex flex-col items-center justify-center"
+            style={{ "--value": 100 }}
             aria-valuenow={100}
             role="progressbar"
           >
-            100%
+            <span className="block leading-none">100%</span>
+            <span className="block text-xs md:text-sm">web</span>
           </div>
-          <div className="font-bold text-4xl md:text-4xl text-secondary">
+          <div className="font-bold text-2xl md:text-4xl text-secondary">
             ${`11,702.70`}
           </div>
         </div>
-      </section>
-      <div className="flex flex-col md:flex-row gap-4 w-full">
+      </div>
+      <div className="flex flex-col lg:flex-row gap-4 w-full">
         <section className="w-full">
           <h2 className="font-bold text-xl md:text-3xl text-center my-4">
             2025 Fundraiser
@@ -115,8 +115,8 @@ export default function Home() {
           </div>
         </section>
       </div>
-      <div className="flex flex-col md:flex-row gap-4 w-full mt-4">
-        <section className="w-full md:w-1/2">
+      <div className="flex flex-col lg:flex-row gap-4 w-full mt-4 bg-primary rounded-xl p-4 shadow-md">
+        <section className="w-full lg:w-1/2">
           <h2 className="font-bold text-xl md:text-3xl text-center my-4">
             2025 Fundraiser Sources
           </h2>
@@ -134,7 +134,7 @@ export default function Home() {
               </thead>
               <tbody>
                 {/* row 1 */}
-                <tr className="bg-base-200">
+                <tr className="">
                   <th>One Time Gift</th>
                   <td>0</td>
                   <td>0</td>
@@ -158,14 +158,7 @@ export default function Home() {
                   <td>2</td>
                 </tr>
                 <tr>
-                  <th>Monthly Pledged</th>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr>
-                  <th>One Time Pledged</th>
+                  <th>Monthly/One Time Pledged</th>
                   <td>0</td>
                   <td>0</td>
                   <td>0</td>
@@ -182,7 +175,7 @@ export default function Home() {
             </table>
           </div>
         </section>
-        <section className="w-full md:w-1/2">
+        <section className="w-full lg:w-1/2">
           <h2 className="font-bold text-xl md:text-3xl text-center my-4">
             2025 Fundraiser (Mini) - Campaign Tools
           </h2>
@@ -200,7 +193,7 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                <tr className="bg-base-200">
+                <tr className="">
                   <th>LIVE</th>
                   <td>1,282</td>
                   <td>78</td>
@@ -214,7 +207,7 @@ export default function Home() {
                   <td>$62,647</td>
                 </tr>
 
-                <tr className="text-xs md:text-2xl bg-base-200">
+                <tr className="text-xs md:text-2xl">
                   <th>TOTAL</th>
                   <td>1634</td>
                   <td>100</td>
@@ -228,6 +221,6 @@ export default function Home() {
       <section className="absolute bottom-4 right-2">
         <ThemeSelector />
       </section>
-    </>
+    </div>
   );
 }
