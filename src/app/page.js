@@ -28,36 +28,33 @@ export default function Home() {
 
         <div className="navbar-center hidden lg:flex"></div>
         <div className="navbar-end">
-          <div className="flex items-end flex-col font-bold gap-2">
+          <div className="flex items-end flex-row gap-2 font-bold gap-2">
             <div className="text-sm md:text-medium text-accent">
-              {formattedDate}
+              {formattedDate}, {formattedTime}
             </div>
-            <div className="text-sm md:text-medium text-accent">
-              {formattedTime}
-            </div>
-            <div className="text-md md:text-xl text-secondary">
+            <div className="text-md md:text-medium text-secondary">
               Web Users : {8}
             </div>
           </div>
         </div>
       </nav>
 
-      <h1 className="font-bold text-xl md:text-5xl text-primary my-8 text-center">
+      <h1 className="font-bold text-xl md:text-4xl text-primary my-8 text-center">
         St. Louis - Now St. Louis Tornado $100K : 05/19/25 - 25215010
       </h1>
 
       <section className="">
-        <div className="flex flex-wrap items-center justify-around md:justify-center md:gap-8 my-2 md:my-6">
+        <div className="flex flex-wrap items-center justify-around md:justify-center md:gap-8 my-2 md:my-4">
           <div className="font-bold text-2xl md:text-4xl text-secondary">
             WEB : {`54`}
           </div>
           <div
             className="font-bold radial-progress bg-primary text-primary-content border-primary border-4"
-            style={{ "--value": 70 } /* as React.CSSProperties */}
-            aria-valuenow={70}
+            style={{ "--value": 100 } /* as React.CSSProperties */}
+            aria-valuenow={100}
             role="progressbar"
           >
-            70%
+            100%
           </div>
           <div className="font-bold text-4xl md:text-4xl text-secondary">
             ${`11,702.70`}
@@ -160,6 +157,73 @@ export default function Home() {
           </div>
         </section>
       </div>
+
+      <section className="w-full md:w-1/2">
+        <h2 className="font-bold text-xl md:text-3xl text-center my-4">
+          2025 Fundraiser Sources
+        </h2>
+        <div className="overflow-x-auto font-bold">
+          <table className="table w-full text-md md:text-xl">
+            {/* head */}
+            <thead>
+              <tr className="text-xs md:text-2xl">
+                <th>USD</th>
+                <th>TOTAL</th>
+                <th>US</th>
+                <th>CA & INTL</th>
+                <th>WEB</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* row 1 */}
+              <tr className="bg-base-200">
+                <th>One Time Gift</th>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              {/* row 2 */}
+              <tr>
+                <th>Recurring Received</th>
+                <td>50</td>
+                <td>2</td>
+                <td>0</td>
+                <td>52</td>
+              </tr>
+              {/* row 3 */}
+              <tr>
+                <th>Recurring Potential</th>
+                <td>2</td>
+                <td>0</td>
+                <td>0</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <th>Monthly Pledged</th>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <th>One Time Pledged</th>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+              <tr>
+                <th>Total</th>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
       <section className="absolute bottom-4 right-2">
         <ThemeSelector />
       </section>
