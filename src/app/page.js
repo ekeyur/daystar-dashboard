@@ -29,24 +29,24 @@ export default function Home() {
         <div className="navbar-center hidden lg:flex"></div>
         <div className="navbar-end">
           <div className="flex items-end flex-row flex-wrap font-bold gap-2">
-            <div className="text-sm md:text-medium text-accent">
+            <div className="text-sm md:text-lg text-accent">
               {formattedDate}, {formattedTime}
             </div>
-            <div className="text-md md:text-medium text-secondary">
+            <div className="text-sm md:text-lg text-secondary">
               web users : {8}
             </div>
           </div>
         </div>
       </nav>
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full gap-4">
-        <h1 className="font-bold text-xl md:text-4xl text-primary my-8 text-center lg:text-left lg:flex-1">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full lg:gap-4">
+        <h1 className="font-bold text-xl md:text-4xl text-primary my-4 md:my-8 text-center lg:text-left lg:flex-1">
           St. Louis - Now St. Louis Tornado $100K : 05/19/25 - 25215010
         </h1>
 
         <div className="flex flex-col items-center justify-center my-2 gap-2 lg:flex-row lg:gap-4">
-          <div className="font-bold text-2xl lg:text-4xl text-secondary">
+          {/* <div className="font-bold text-2xl lg:text-4xl text-secondary">
             {`54`}
-          </div>
+          </div> */}
           <div
             className="font-bold radial-progress bg-primary text-primary-content border-primary border-4 flex flex-col items-center justify-center"
             style={{ "--value": 100 }}
@@ -185,7 +185,7 @@ export default function Home() {
                 <tr className="text-xs md:text-2xl">
                   <th />
                   <th>PLEDGES</th>
-                  <th>PERCENTAGE</th>
+                  <th>PERCENT</th>
                   <th>DOLLARS</th>
                 </tr>
               </thead>
