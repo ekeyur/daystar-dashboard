@@ -20,7 +20,7 @@ export default function Home() {
   });
 
   return (
-    <div className="px-8">
+    <div className="px-2 md:px-4">
       <nav className="navbar bg-base-100 shadow-sm">
         <div className="navbar-start">
           <Image src="/daystar_logo.png" alt="Logo" width={120} height={160} />
@@ -28,7 +28,7 @@ export default function Home() {
 
         <div className="navbar-center hidden lg:flex"></div>
         <div className="navbar-end">
-          <div className="flex items-end flex-row gap-2 font-bold gap-2">
+          <div className="flex items-end flex-row flex-wrap font-bold gap-2">
             <div className="text-sm md:text-medium text-accent">
               {formattedDate}, {formattedTime}
             </div>
@@ -38,13 +38,13 @@ export default function Home() {
           </div>
         </div>
       </nav>
-      <div className="flex w-full items-center justify-between flex-wrap">
-        <h1 className="font-bold text-xl md:text-4xl text-primary my-8 text-center">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full gap-4">
+        <h1 className="font-bold text-xl md:text-4xl text-primary my-8 text-center lg:text-left lg:flex-1">
           St. Louis - Now St. Louis Tornado $100K : 05/19/25 - 25215010
         </h1>
 
-        <div className="flex flex-wrap items-center justify-between lg:justify-center gap-2">
-          <div className="font-bold text-2xl md:text-4xl text-secondary">
+        <div className="flex flex-col items-center justify-center my-2 gap-2 lg:flex-row lg:gap-4">
+          <div className="font-bold text-2xl lg:text-4xl text-secondary">
             {`54`}
           </div>
           <div
@@ -54,18 +54,15 @@ export default function Home() {
             role="progressbar"
           >
             <span className="block leading-none">100%</span>
-            <span className="block text-xs md:text-sm">web</span>
+            <span className="block text-xs lg:text-sm">web</span>
           </div>
-          <div className="font-bold text-2xl md:text-4xl text-secondary">
+          <div className="font-bold text-2xl lg:text-4xl text-secondary">
             ${`11,702.70`}
           </div>
         </div>
       </div>
       <div className="flex flex-col lg:flex-row gap-4 w-full">
         <section className="w-full">
-          <h2 className="font-bold text-xl md:text-3xl text-center my-4">
-            2025 Fundraiser
-          </h2>
           <div className="overflow-x-auto font-bold">
             <table className="table w-full text-md md:text-xl">
               {/* head */}
@@ -118,7 +115,7 @@ export default function Home() {
       <div className="flex flex-col lg:flex-row gap-4 w-full mt-4 bg-primary rounded-xl p-4 shadow-md">
         <section className="w-full lg:w-1/2">
           <h2 className="font-bold text-xl md:text-3xl text-center my-4">
-            2025 Fundraiser Sources
+            2025 Fundraiser Monies Campaign Total
           </h2>
           <div className="overflow-x-auto font-bold">
             <table className="table w-full text-md md:text-xl">
@@ -177,7 +174,7 @@ export default function Home() {
         </section>
         <section className="w-full lg:w-1/2">
           <h2 className="font-bold text-xl md:text-3xl text-center my-4">
-            2025 Fundraiser (Mini) - Campaign Tools
+            2025 Fundraiser - Total Campaign
           </h2>
           <div className="overflow-x-auto font-bold">
             <table className="table w-full text-mx md:text-xl">
