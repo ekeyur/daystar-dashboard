@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "15.3.3",
+    "axios": "^1.10.0",
+    "next": "^15.4.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "swr": "^2.3.4"
@@ -17,6 +18,8 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/node": "24.0.14",
+    "@types/react": "19.1.8",
     "daisyui": "^5.0.43",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",

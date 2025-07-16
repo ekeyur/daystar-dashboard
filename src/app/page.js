@@ -1,63 +1,86 @@
-import Image from "next/image";
-import ThemeSelector from "@/components/ThemeSelector";
+"use client";
+
+import { useDashboardData } from "@/hooks/useApi";
+import { useEffect } from "react";
+import { formatDataForTable } from "@/utils";
+import { useAuth } from "@/contexts/authcontext";
 
 export default function Home() {
-  const currentDate = new Date();
+  const { isAuthenticated, loading: authLoading, login } = useAuth();
+  const {
+    data,
+    isLoading: dashboardLoading,
+    error: dashboardError,
+  } = useDashboardData();
 
-  // Format date as "Thu, May 29, 2025"
-  const formattedDate = currentDate.toLocaleDateString("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
+  const dashboardData = data?.[0]?.outputValues || {};
 
-  // Format time as "12:38 PM"
-  const formattedTime = currentDate.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
+  const { rows, totals } = formatDataForTable(dashboardData);
+
+  const tickWebPercent = dashboardData?.tickWebPercent * 100 || 0;
+
+  console.log("Dashboard Data:", dashboardData);
+
+  useEffect(() => {
+    const autoLogin = async () => {
+      if (!isAuthenticated && !authLoading) {
+        try {
+          await login();
+        } catch (error) {
+          console.error("Auto-login failed:", error);
+        }
+      }
+    };
+    autoLogin();
+  }, [isAuthenticated, login]);
+
+  if (authLoading || dashboardLoading) {
+    return (
+      <div className="flex items-center justify-center h-100">
+        <span className="loading loading-spinner loading-xl"></span>
+      </div>
+    );
+  }
+
+  if (dashboardError) {
+    return (
+      <div className="flex items-center justify-center h-100">
+        <span className="text-red-500">
+          Error loading dashboard data: {dashboardError.message}
+        </span>
+      </div>
+    );
+  }
 
   return (
-    <div className="px-2 md:px-4">
-      <nav className="navbar bg-base-100 shadow-sm">
-        <div className="navbar-start">
-          <Image src="/daystar_logo.png" alt="Logo" width={120} height={160} />
-        </div>
-
-        <div className="navbar-center hidden lg:flex"></div>
-        <div className="navbar-end">
-          <div className="flex items-end flex-row flex-wrap font-bold gap-2">
-            <div className="text-sm md:text-lg text-accent">
-              {formattedDate}, {formattedTime}
-            </div>
-            <div className="text-sm md:text-lg text-secondary">
-              web users : {8}
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div className="">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full lg:gap-4">
-        <h1 className="font-bold text-xl md:text-4xl text-primary my-4 md:my-8 text-center lg:text-left lg:flex-1">
-          St. Louis - Now St. Louis Tornado $100K : 05/19/25 - 25215010
-        </h1>
-
+        <div>
+          <h1 className="font-bold text-xl md:text-4xl text-center lg:text-left lg:flex-1">
+            {dashboardData.tickTitle}
+          </h1>
+          {!!dashboardData?.tickSubtitle && (
+            <h2 className="font-light lg:font-bold text-sm md:text-md text-center lg:text-left lg:flex-1">
+              {dashboardData?.tickSubtitle}
+            </h2>
+          )}
+        </div>
         <div className="flex flex-col items-center justify-center my-2 gap-2 lg:flex-row lg:gap-4">
-          {/* <div className="font-bold text-2xl lg:text-4xl text-secondary">
-            {`54`}
-          </div> */}
           <div
             className="font-bold radial-progress bg-primary text-primary-content border-primary border-4 flex flex-col items-center justify-center"
-            style={{ "--value": 100 }}
-            aria-valuenow={100}
+            style={{ "--value": tickWebPercent }}
+            aria-valuenow={tickWebPercent}
             role="progressbar"
           >
-            <span className="block leading-none">100%</span>
+            <span className="block leading-none">{tickWebPercent}%</span>
             <span className="block text-xs lg:text-sm">web</span>
           </div>
           <div className="font-bold text-2xl lg:text-4xl text-secondary">
-            ${`11,702.70`}
+            {dashboardData?.tickTotal?.amount.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+              maximumFractionDigits: 0,
+            }) || 0}
           </div>
         </div>
       </div>
@@ -77,35 +100,21 @@ export default function Home() {
               </thead>
               <tbody>
                 {/* row 1 */}
-                <tr className="bg-base-200">
-                  <th>$0 - $0.01</th>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                {/* row 2 */}
-                <tr>
-                  <th>$0.02 - $1,000</th>
-                  <td>50</td>
-                  <td>2</td>
-                  <td>0</td>
-                  <td>52</td>
-                </tr>
-                {/* row 3 */}
-                <tr>
-                  <th>$1000 - $50,000</th>
-                  <td>2</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>2</td>
-                </tr>
+                {rows.map((row, index) => (
+                  <tr key={index}>
+                    <th>{row.appeal}</th>
+                    <td>{row.us}</td>
+                    <td>{row.ca}</td>
+                    <td>{row.intl}</td>
+                    <td>{row.total}</td>
+                  </tr>
+                ))}
                 <tr className="text-xs md:text-2xl bg-base-200">
-                  <th>TOTAL</th>
-                  <td>52</td>
-                  <td>2</td>
-                  <td>0</td>
-                  <td>54</td>
+                  <th>{totals.appeal}</th>
+                  <th>{totals.us}</th>
+                  <th>{totals.ca}</th>
+                  <th>{totals.intl}</th>
+                  <th>{totals.total}</th>
                 </tr>
               </tbody>
             </table>
@@ -215,9 +224,6 @@ export default function Home() {
           </div>
         </section>
       </div>
-      <section className="absolute bottom-4 right-2">
-        <ThemeSelector />
-      </section>
     </div>
   );
 }
