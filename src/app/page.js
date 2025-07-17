@@ -4,6 +4,7 @@ import { useDashboardData } from "@/hooks/useApi";
 import { useEffect } from "react";
 import { formatDataForTable } from "@/utils";
 import { useAuth } from "@/contexts/authcontext";
+import Header from "@/components/Header";
 
 export default function Home() {
   const { isAuthenticated, loading: authLoading, login } = useAuth();
@@ -13,13 +14,11 @@ export default function Home() {
     error: dashboardError,
   } = useDashboardData();
 
-  const dashboardData = data?.[0]?.outputValues || {};
+  const dashboardData = data?.result?.[0]?.outputValues || {};
 
   const { rows, totals } = formatDataForTable(dashboardData);
 
   const tickWebPercent = dashboardData?.tickWebPercent * 100 || 0;
-
-  console.log("Dashboard Data:", dashboardData);
 
   useEffect(() => {
     const autoLogin = async () => {
@@ -54,7 +53,8 @@ export default function Home() {
 
   return (
     <div className="">
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full lg:gap-4">
+      <Header />
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full lg:gap-4 px-2 md:px-4">
         <div>
           <h1 className="font-bold text-xl md:text-4xl text-center lg:text-left lg:flex-1">
             {dashboardData.tickTitle}

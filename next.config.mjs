@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
-  trailingSlash: true,
-  images: { unoptimized: true },
+  // add loggging for debugging
+  logging: {
+    level: "verbose",
+  },
 };
 
 export default nextConfig;

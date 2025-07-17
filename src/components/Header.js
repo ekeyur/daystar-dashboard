@@ -15,11 +15,14 @@ function Header() {
   const formattedTime = currentDate.toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",
+    second: "2-digit",
+    timeZoneName: "short",
     hour12: true,
   });
+
   return (
     <div>
-      <nav className="navbar p-2 bg-white shadow-sm rouunded-sm text-primary">
+      <nav className="navbar p-2 bg-white shadow-sm rouunded-sm text-primary px-2 md:px-4">
         <div className="navbar-start">
           <Image
             src="/daystar_logo.png"

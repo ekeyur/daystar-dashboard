@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import { AuthProvider } from "@/contexts/authcontext";
 import { SWRConfig } from "swr";
 import "./globals.css";
@@ -19,8 +18,7 @@ export default function RootLayout({ children }) {
               errorRetryInterval: 5000,
             }}
           >
-            <Header />
-            <div className="px-2 md:px-4">{children}</div>
+            <div>{children}</div>
           </SWRConfig>
         </AuthProvider>
       </body>

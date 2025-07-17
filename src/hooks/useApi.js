@@ -10,7 +10,6 @@ const fetcher = async (url) => {
 
 export const useDashboardData = () => {
   const { isAuthenticated, login } = useAuth();
-
   // Call login if user is not authenticated
   useEffect(() => {
     if (!isAuthenticated) {

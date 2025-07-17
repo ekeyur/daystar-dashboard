@@ -31,16 +31,8 @@ export const AuthProvider = ({ children }) => {
   const login = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(
-        "/api/token",
-        new URLSearchParams({
-          grant_type: "client_credentials",
-          client_id: process.env.DAYSTAR_SALESFORCE_CLIENT_ID,
-          client_secret: process.env.DAYSTAR_SALESFORCE_CLIENT_SECRET,
-        })
-      );
+      const response = await axios.post("/api/auth-token");
       const { access_token: newToken } = response.data;
-
       setToken(newToken);
       setIsAuthenticated(true);
       sessionStorage.setItem("authToken", newToken);

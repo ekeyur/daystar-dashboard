@@ -3,14 +3,14 @@ import { useAuth } from "../contexts/authcontext";
 
 // Create axios instance
 export const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  baseURL: "http://localhost:3000/",
   timeout: 10000,
 });
 
 // Request interceptor to add auth token
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("authToken");
+    const token = sessionStorage.getItem("authToken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -27,7 +27,7 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Token expired or invalid
-      localStorage.removeItem("authToken");
+      sessionStorage.removeItem("authToken");
       delete apiClient.defaults.headers.common["Authorization"];
       // Call login function from authContext
       const { login } = useAuth();
@@ -39,8 +39,10 @@ apiClient.interceptors.response.use(
 
 // API functions
 export const dashboardAPI = {
-  getDashboardData: () =>
-    apiClient.get(
-      "/services/data/v64.0/actions/custom/flow/Ticker_Generate_UI_Values"
-    ),
+  getDashboardData: () => {
+    return apiClient.get("api/live-ticker-data", {
+      // Add any other data your API needs here
+      // The token will be in the Authorization header
+    });
+  },
 };
