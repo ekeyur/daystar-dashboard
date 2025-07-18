@@ -132,10 +132,10 @@ export default function Home() {
               <thead>
                 <tr className="text-xs md:text-2xl">
                   <th>USD</th>
-                  <th>TOTAL</th>
                   <th>US</th>
                   <th>CA & INTL</th>
                   <th>WEB</th>
+                  <th>TOTAL</th>
                 </tr>
               </thead>
               <tbody>
