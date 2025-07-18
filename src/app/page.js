@@ -18,7 +18,7 @@ export default function Home() {
 
   const { rows, totals } = formatDataForTable(dashboardData);
 
-  const tickWebPercent = dashboardData?.tickWebPercent * 100 || 0;
+  const tickWebPercent = (dashboardData?.tickWebPercent * 100).toFixed(2) || 0;
 
   useEffect(() => {
     const autoLogin = async () => {
@@ -65,7 +65,7 @@ export default function Home() {
             </h2>
           )}
         </div>
-        <div className="flex flex-col items-center justify-center my-2 gap-2 lg:flex-row lg:gap-4">
+        <div className="flex flex-col items-center justify-center my-2 gap-2 lg:flex-row lg:gap-4 px-2 md:px-6">
           <div
             className="font-bold radial-progress bg-primary text-primary-content border-primary border-4 flex flex-col items-center justify-center"
             style={{ "--value": tickWebPercent }}
