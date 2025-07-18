@@ -40,9 +40,6 @@ apiClient.interceptors.response.use(
 // API functions
 export const dashboardAPI = {
   getDashboardData: () => {
-    return apiClient.get("api/live-ticker-data", {
-      // Add any other data your API needs here
-      // The token will be in the Authorization header
-    });
+    return apiClient.get("api/live-ticker-data");
   },
 };

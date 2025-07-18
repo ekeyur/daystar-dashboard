@@ -21,7 +21,7 @@ export const useDashboardData = () => {
     isAuthenticated ? "getDashboardData" : null,
     fetcher,
     {
-      refreshInterval: 5000, // Refresh every 5 seconds
+      refreshInterval: 5 * 1000, // Refresh every 5 seconds
       revalidateOnFocus: true,
       revalidateOnReconnect: true,
       keepPreviousData: true,

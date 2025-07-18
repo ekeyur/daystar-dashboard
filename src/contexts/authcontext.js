@@ -37,7 +37,6 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       sessionStorage.setItem("authToken", newToken);
 
-      // Set default auth header for all future requests
       axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
 
       return { success: true };
