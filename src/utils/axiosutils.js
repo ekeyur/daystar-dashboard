@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/authcontext";
 
 // Create axios instance
 export const apiClient = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   timeout: 10000,
 });
 

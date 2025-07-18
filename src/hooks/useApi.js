@@ -1,7 +1,6 @@
 import useSWR from "swr";
 import { dashboardAPI } from "@/utils/axiosutils";
 import { useAuth } from "@/contexts/authcontext";
-import { useEffect } from "react";
 
 const fetcher = async (url) => {
   const response = await dashboardAPI[url]();
