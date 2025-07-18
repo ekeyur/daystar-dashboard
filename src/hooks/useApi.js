@@ -9,13 +9,7 @@ const fetcher = async (url) => {
 };
 
 export const useDashboardData = () => {
-  const { isAuthenticated, login } = useAuth();
-  // Call login if user is not authenticated
-  useEffect(() => {
-    if (!isAuthenticated) {
-      login();
-    }
-  }, [isAuthenticated, login]);
+  const { isAuthenticated } = useAuth();
 
   const { data, error, isLoading, mutate } = useSWR(
     isAuthenticated ? "getDashboardData" : null,
