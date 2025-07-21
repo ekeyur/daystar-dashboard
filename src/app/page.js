@@ -1,7 +1,7 @@
 "use client";
 
 import { useDashboardData } from "@/hooks/useApi";
-import { formatDataForTable } from "@/utils";
+import { formatTickDataForTable, formatCampaignDataForTable } from "@/utils";
 import { useAuth } from "@/contexts/authcontext";
 import Header from "@/components/Header";
 import AnimatedValue from "@/components/AnimatedValue";
@@ -15,7 +15,11 @@ export default function Home() {
   } = useDashboardData();
 
   const dashboardData = data?.result?.[0]?.outputValues || {};
-  const { rows, totals } = formatDataForTable(dashboardData);
+  const { tickRows, tickTotals } = formatTickDataForTable(dashboardData);
+
+  const { campaignTitle, campaignRows } =
+    formatCampaignDataForTable(dashboardData);
+
   const tickWebPercent = (dashboardData?.tickWebPercent * 100).toFixed(2) || 0;
 
   if (authLoading || dashboardLoading) {
@@ -98,7 +102,7 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((row, index) => (
+                {tickRows.map((row, index) => (
                   <tr key={index}>
                     <th>{row.appeal}</th>
                     <td>
@@ -118,21 +122,25 @@ export default function Home() {
                   </tr>
                 ))}
                 <tr className="text-xs md:text-2xl bg-base-200">
-                  <th>{totals.appeal}</th>
+                  <th>{tickTotals.appeal}</th>
                   <th>
-                    <AnimatedValue value={totals.us}>{totals.us}</AnimatedValue>
-                  </th>
-                  <th>
-                    <AnimatedValue value={totals.ca}>{totals.ca}</AnimatedValue>
-                  </th>
-                  <th>
-                    <AnimatedValue value={totals.intl}>
-                      {totals.intl}
+                    <AnimatedValue value={tickTotals.us}>
+                      {tickTotals.us}
                     </AnimatedValue>
                   </th>
                   <th>
-                    <AnimatedValue value={totals.total}>
-                      {totals.total}
+                    <AnimatedValue value={tickTotals.ca}>
+                      {tickTotals.ca}
+                    </AnimatedValue>
+                  </th>
+                  <th>
+                    <AnimatedValue value={tickTotals.intl}>
+                      {tickTotals.intl}
+                    </AnimatedValue>
+                  </th>
+                  <th>
+                    <AnimatedValue value={tickTotals.total}>
+                      {tickTotals.total}
                     </AnimatedValue>
                   </th>
                 </tr>
@@ -144,98 +152,71 @@ export default function Home() {
       <div className="flex flex-col lg:flex-row gap-4 w-full mt-4 bg-primary rounded-xl p-4 shadow-md">
         <section className="w-full lg:w-1/2">
           <h2 className="font-bold text-xl md:text-3xl text-center my-4">
-            2025 Fundraiser Monies Campaign Total
+            <AnimatedValue value={campaignTitle}>{campaignTitle}</AnimatedValue>
           </h2>
           <div className="overflow-x-auto font-bold">
             <table className="table w-full text-md md:text-xl">
               <thead>
                 <tr className="text-xs md:text-2xl">
-                  <th>USD</th>
+                  <th></th>
                   <th>US</th>
-                  <th>CA & INTL</th>
-                  <th>WEB</th>
+                  <th>CA</th>
+                  <th>INTL</th>
                   <th>TOTAL</th>
                 </tr>
               </thead>
               <tbody>
-                {/* row 1 */}
-                <tr className="">
-                  <th>One Time Gift</th>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                {/* row 2 */}
-                <tr>
-                  <th>Recurring Received</th>
-                  <td>50</td>
-                  <td>2</td>
-                  <td>0</td>
-                  <td>52</td>
-                </tr>
-                {/* row 3 */}
-                <tr>
-                  <th>Recurring Potential</th>
-                  <td>2</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <th>Monthly/One Time Pledged</th>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr>
-                  <th>Total</th>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-        <section className="w-full lg:w-1/2">
-          <h2 className="font-bold text-xl md:text-3xl text-center my-4">
-            2025 Fundraiser - Total Campaign
-          </h2>
-          <div className="overflow-x-auto font-bold">
-            <table className="table w-full text-mx md:text-xl">
-              <thead>
-                <tr />
-                <tr className="text-xs md:text-2xl">
-                  <th />
-                  <th>PLEDGES</th>
-                  <th>PERCENT</th>
-                  <th>DOLLARS</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="">
-                  <th>LIVE</th>
-                  <td>1,282</td>
-                  <td>78</td>
-                  <td>$217,356</td>
-                </tr>
-                {/* row 2 */}
-                <tr>
-                  <th>WEB</th>
-                  <td>352</td>
-                  <td>22</td>
-                  <td>$62,647</td>
-                </tr>
-
-                <tr className="text-xs md:text-2xl">
-                  <th>TOTAL</th>
-                  <td>1634</td>
-                  <td>100</td>
-                  <td>$280,004</td>
-                </tr>
+                {campaignRows.map((row, index) => (
+                  <tr
+                    key={index}
+                    className={index % 2 === 0 ? "bg-base-200" : ""}
+                  >
+                    <th>{row.header}</th>
+                    <td>
+                      <AnimatedValue value={row.us}>
+                        {row.us?.toLocaleString() || 0}
+                      </AnimatedValue>
+                    </td>
+                    <td>
+                      <AnimatedValue value={row.ca}>
+                        {row.ca?.toLocaleString() || 0}
+                      </AnimatedValue>
+                    </td>
+                    <td>
+                      <AnimatedValue value={row.intl}>
+                        {row.intl?.toLocaleString() || 0}
+                      </AnimatedValue>
+                    </td>
+                    <td>
+                      <AnimatedValue value={row.total}>
+                        {row.total?.toLocaleString() || 0}
+                      </AnimatedValue>
+                    </td>
+                  </tr>
+                ))}
+                {/* <tr className="text-xs md:text-2xl bg-primary text-primary-content">
+                  <th>{campaignTotals.category}</th>
+                  <th>
+                    <AnimatedValue value={campaignTotals.us}>
+                      {campaignTotals.us?.toLocaleString() || 0}
+                    </AnimatedValue>
+                  </th>
+                  <th>
+                    <AnimatedValue value={campaignTotals.ca}>
+                      {campaignTotals.ca?.toLocaleString() || 0}
+                    </AnimatedValue>
+                  </th>
+                  <th>
+                    <AnimatedValue value={campaignTotals.intl}>
+                      {campaignTotals.intl?.toLocaleString() || 0}
+                    </AnimatedValue>
+                  </th>
+                  <th>
+                    <AnimatedValue value={campaignTotals.total}>
+                      {campaignTotals.total?.toLocaleString() || 0}
+                    </AnimatedValue>
+                  </th>
+                </tr> */}
               </tbody>
             </table>
           </div>
