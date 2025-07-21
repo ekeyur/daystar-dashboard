@@ -7,7 +7,7 @@ import Header from "@/components/Header";
 import AnimatedValue from "@/components/AnimatedValue";
 
 export default function Home() {
-  const { isAuthenticated, loading: authLoading, login } = useAuth();
+  const { loading: authLoading } = useAuth();
   const {
     data,
     isLoading: dashboardLoading,

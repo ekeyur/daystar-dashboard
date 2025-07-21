@@ -12,7 +12,6 @@ function Header() {
     year: "numeric",
   });
 
-  // Format time as "12:38 PM"
   const formattedTime = currentDate.toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",
@@ -37,11 +36,7 @@ function Header() {
         <div className="navbar-end">
           <div className="flex items-end flex-row flex-wrap font-bold gap-2">
             <div className="text-sm md:text-md flex gap-4 items-center">
-              <div className="relative inline-block">
-                <AnimatedValue value={formattedDate} className="relative z-10">
-                  {formattedDate}
-                </AnimatedValue>
-              </div>
+              <div className="relative inline-block">{formattedDate}</div>
               <div className="relative inline-block">
                 <AnimatedValue value={formattedTime} className="relative z-10">
                   {formattedTime}

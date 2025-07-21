@@ -32,6 +32,11 @@ export const useDashboardData = () => {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,
       keepPreviousData: true,
+      onError: (err) => {
+        if (err.response?.status === 401) {
+          login();
+        }
+      },
     }
   );
 

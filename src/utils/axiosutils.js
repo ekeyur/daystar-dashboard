@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useAuth } from "../contexts/authcontext";
 
 // Create axios instance
 export const apiClient = axios.create({
@@ -17,22 +16,6 @@ apiClient.interceptors.request.use(
     return config;
   },
   (error) => {
-    return Promise.reject(error);
-  }
-);
-
-// Response interceptor to handle auth errors
-apiClient.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      // Token expired or invalid
-      sessionStorage.removeItem("authToken");
-      delete apiClient.defaults.headers.common["Authorization"];
-      // Call login function from authContext
-      const { login } = useAuth();
-      login();
-    }
     return Promise.reject(error);
   }
 );
