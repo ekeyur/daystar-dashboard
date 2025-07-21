@@ -167,10 +167,7 @@ export default function Home() {
               </thead>
               <tbody>
                 {campaignRows.map((row, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? "bg-base-200" : ""}
-                  >
+                  <tr key={index}>
                     <th>{row.header}</th>
                     <td>
                       <AnimatedValue value={row.us}>
@@ -194,29 +191,6 @@ export default function Home() {
                     </td>
                   </tr>
                 ))}
-                {/* <tr className="text-xs md:text-2xl bg-primary text-primary-content">
-                  <th>{campaignTotals.category}</th>
-                  <th>
-                    <AnimatedValue value={campaignTotals.us}>
-                      {campaignTotals.us?.toLocaleString() || 0}
-                    </AnimatedValue>
-                  </th>
-                  <th>
-                    <AnimatedValue value={campaignTotals.ca}>
-                      {campaignTotals.ca?.toLocaleString() || 0}
-                    </AnimatedValue>
-                  </th>
-                  <th>
-                    <AnimatedValue value={campaignTotals.intl}>
-                      {campaignTotals.intl?.toLocaleString() || 0}
-                    </AnimatedValue>
-                  </th>
-                  <th>
-                    <AnimatedValue value={campaignTotals.total}>
-                      {campaignTotals.total?.toLocaleString() || 0}
-                    </AnimatedValue>
-                  </th>
-                </tr> */}
               </tbody>
             </table>
           </div>
