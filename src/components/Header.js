@@ -1,4 +1,5 @@
 import Image from "next/image";
+import AnimatedValue from "@/components/AnimatedValue";
 
 function Header() {
   const currentDate = new Date();
@@ -22,7 +23,7 @@ function Header() {
 
   return (
     <div>
-      <nav className="navbar p-2 bg-white shadow-sm rouunded-sm text-primary px-2 md:px-4">
+      <nav className="navbar p-2 bg-white shadow-sm rounded-sm text-primary px-2 md:px-4">
         <div className="navbar-start">
           <Image
             src="/daystar_logo.png"
@@ -35,11 +36,18 @@ function Header() {
         <div className="navbar-center hidden lg:flex"></div>
         <div className="navbar-end">
           <div className="flex items-end flex-row flex-wrap font-bold gap-2">
-            <div className="text-sm md:text-md">
-              {formattedDate}, {formattedTime}
+            <div className="text-sm md:text-md flex gap-4 items-center">
+              <div className="relative inline-block">
+                <AnimatedValue value={formattedDate} className="relative z-10">
+                  {formattedDate}
+                </AnimatedValue>
+              </div>
+              <div className="relative inline-block">
+                <AnimatedValue value={formattedTime} className="relative z-10">
+                  {formattedTime}
+                </AnimatedValue>
+              </div>
             </div>
-            <span>|</span>
-            <div className="text-sm md:text-md">{8}</div>
           </div>
         </div>
       </nav>

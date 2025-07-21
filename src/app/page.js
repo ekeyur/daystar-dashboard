@@ -1,10 +1,10 @@
 "use client";
 
 import { useDashboardData } from "@/hooks/useApi";
-import { useEffect } from "react";
 import { formatDataForTable } from "@/utils";
 import { useAuth } from "@/contexts/authcontext";
 import Header from "@/components/Header";
+import AnimatedValue from "@/components/AnimatedValue";
 
 export default function Home() {
   const { isAuthenticated, loading: authLoading, login } = useAuth();
@@ -15,23 +15,8 @@ export default function Home() {
   } = useDashboardData();
 
   const dashboardData = data?.result?.[0]?.outputValues || {};
-
   const { rows, totals } = formatDataForTable(dashboardData);
-
   const tickWebPercent = (dashboardData?.tickWebPercent * 100).toFixed(2) || 0;
-
-  useEffect(() => {
-    const autoLogin = async () => {
-      if (!isAuthenticated && !authLoading) {
-        try {
-          await login();
-        } catch (error) {
-          console.error("Auto-login failed:", error);
-        }
-      }
-    };
-    autoLogin();
-  }, [isAuthenticated, login]);
 
   if (authLoading || dashboardLoading) {
     return (
@@ -57,11 +42,15 @@ export default function Home() {
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full lg:gap-4 px-2 md:px-4">
         <div>
           <h1 className="font-bold text-xl md:text-4xl text-center lg:text-left lg:flex-1">
-            {dashboardData.tickTitle}
+            <AnimatedValue value={dashboardData.tickTitle}>
+              {dashboardData.tickTitle}
+            </AnimatedValue>
           </h1>
           {!!dashboardData?.tickSubtitle && (
             <h2 className="font-light lg:font-bold text-sm md:text-md text-center lg:text-left lg:flex-1">
-              {dashboardData?.tickSubtitle}
+              <AnimatedValue value={dashboardData.tickSubtitle}>
+                {dashboardData?.tickSubtitle}
+              </AnimatedValue>
             </h2>
           )}
         </div>
@@ -72,23 +61,33 @@ export default function Home() {
             aria-valuenow={tickWebPercent}
             role="progressbar"
           >
-            <span className="block leading-none">{tickWebPercent}%</span>
+            <AnimatedValue
+              value={tickWebPercent}
+              className="block leading-none"
+            >
+              {tickWebPercent}%
+            </AnimatedValue>
             <span className="block text-xs lg:text-sm">web</span>
           </div>
           <div className="font-bold text-2xl lg:text-4xl text-secondary">
-            {dashboardData?.tickTotal?.amount.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-              maximumFractionDigits: 0,
-            }) || 0}
+            <AnimatedValue
+              value={dashboardData?.tickTotal?.amount}
+              animationType="value-changed-currency"
+            >
+              {dashboardData?.tickTotal?.amount?.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+                maximumFractionDigits: 0,
+              }) || 0}
+            </AnimatedValue>
           </div>
         </div>
       </div>
+
       <div className="flex flex-col lg:flex-row gap-4 w-full">
         <section className="w-full">
           <div className="overflow-x-auto font-bold">
             <table className="table w-full text-md md:text-xl">
-              {/* head */}
               <thead>
                 <tr className="text-xs md:text-2xl">
                   <th>APPEAL</th>
@@ -99,22 +98,43 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                {/* row 1 */}
                 {rows.map((row, index) => (
                   <tr key={index}>
                     <th>{row.appeal}</th>
-                    <td>{row.us}</td>
-                    <td>{row.ca}</td>
-                    <td>{row.intl}</td>
-                    <td>{row.total}</td>
+                    <td>
+                      <AnimatedValue value={row.us}>{row.us}</AnimatedValue>
+                    </td>
+                    <td>
+                      <AnimatedValue value={row.ca}>{row.ca}</AnimatedValue>
+                    </td>
+                    <td>
+                      <AnimatedValue value={row.intl}>{row.intl}</AnimatedValue>
+                    </td>
+                    <td>
+                      <AnimatedValue value={row.total}>
+                        {row.total}
+                      </AnimatedValue>
+                    </td>
                   </tr>
                 ))}
                 <tr className="text-xs md:text-2xl bg-base-200">
                   <th>{totals.appeal}</th>
-                  <th>{totals.us}</th>
-                  <th>{totals.ca}</th>
-                  <th>{totals.intl}</th>
-                  <th>{totals.total}</th>
+                  <th>
+                    <AnimatedValue value={totals.us}>{totals.us}</AnimatedValue>
+                  </th>
+                  <th>
+                    <AnimatedValue value={totals.ca}>{totals.ca}</AnimatedValue>
+                  </th>
+                  <th>
+                    <AnimatedValue value={totals.intl}>
+                      {totals.intl}
+                    </AnimatedValue>
+                  </th>
+                  <th>
+                    <AnimatedValue value={totals.total}>
+                      {totals.total}
+                    </AnimatedValue>
+                  </th>
                 </tr>
               </tbody>
             </table>
@@ -128,7 +148,6 @@ export default function Home() {
           </h2>
           <div className="overflow-x-auto font-bold">
             <table className="table w-full text-md md:text-xl">
-              {/* head */}
               <thead>
                 <tr className="text-xs md:text-2xl">
                   <th>USD</th>
@@ -187,8 +206,6 @@ export default function Home() {
           </h2>
           <div className="overflow-x-auto font-bold">
             <table className="table w-full text-mx md:text-xl">
-              {/* head */}
-
               <thead>
                 <tr />
                 <tr className="text-xs md:text-2xl">

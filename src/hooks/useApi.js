@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import { dashboardAPI } from "@/utils/axiosutils";
 import { useAuth } from "@/contexts/authcontext";
+import { useEffect } from "react";
 
 const fetcher = async (url) => {
   const response = await dashboardAPI[url]();
@@ -8,7 +9,20 @@ const fetcher = async (url) => {
 };
 
 export const useDashboardData = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading: authLoading, login } = useAuth();
+
+  useEffect(() => {
+    const autoLogin = async () => {
+      if (!isAuthenticated && !authLoading) {
+        try {
+          await login();
+        } catch (error) {
+          console.error("Auto-login failed:", error);
+        }
+      }
+    };
+    autoLogin();
+  }, [isAuthenticated, authLoading, login]);
 
   const { data, error, isLoading, mutate } = useSWR(
     isAuthenticated ? "getDashboardData" : null,

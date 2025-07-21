@@ -9,3 +9,110 @@
   --color-secondary: azure;
   --color-accent: #c2e2e9;
 }
+
+@keyframes glow-green {
+  0% {
+    box-shadow: 0 0 5px #10b981;
+    background-color: rgba(16, 185, 129, 0.1);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px #10b981, 0 0 30px #10b981;
+    background-color: rgba(16, 185, 129, 0.2);
+    transform: scale(1.02); /* Reduced scale to minimize movement */
+  }
+  100% {
+    box-shadow: 0 0 5px #10b981;
+    background-color: rgba(16, 185, 129, 0.1);
+    transform: scale(1);
+  }
+}
+
+@keyframes glow-blue {
+  0% {
+    box-shadow: 0 0 5px #3b82f6;
+    background-color: rgba(59, 130, 246, 0.1);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px #3b82f6, 0 0 30px #3b82f6;
+    background-color: rgba(59, 130, 246, 0.2);
+    transform: scale(1.02); /* Reduced scale to minimize movement */
+  }
+  100% {
+    box-shadow: 0 0 5px #3b82f6;
+    background-color: rgba(59, 130, 246, 0.1);
+    transform: scale(1);
+  }
+}
+
+@keyframes glow-green-no-scale {
+  0% {
+    box-shadow: 0 0 5px #10b981;
+    background-color: rgba(16, 185, 129, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px #10b981, 0 0 30px #10b981;
+    background-color: rgba(16, 185, 129, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 5px #10b981;
+    background-color: rgba(16, 185, 129, 0.1);
+  }
+}
+
+@keyframes glow-blue-no-scale {
+  0% {
+    box-shadow: 0 0 5px #3b82f6;
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px #3b82f6, 0 0 30px #3b82f6;
+    background-color: rgba(59, 130, 246, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 5px #3b82f6;
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+}
+
+.value-changed {
+  animation: glow-green 2s ease-in-out;
+  border-radius: 4px;
+  padding: 2px 4px;
+  display: inline-block;
+  position: relative;
+  transform-origin: center;
+  /* Prevent layout shift */
+  margin: 0;
+  will-change: transform, box-shadow, background-color;
+  isolation: isolate; /* Creates new stacking context */
+}
+
+.value-changed-currency {
+  animation: glow-blue 2s ease-in-out;
+  border-radius: 4px;
+  padding: 2px 4px;
+  display: inline-block;
+  position: relative;
+  transform-origin: center;
+  /* Prevent layout shift */
+  margin: 0;
+  will-change: transform, box-shadow, background-color;
+  isolation: isolate; /* Creates new stacking context */
+}
+
+.value-changed-no-scale {
+  animation: glow-green-no-scale 2s ease-in-out;
+  border-radius: 4px;
+  padding: 2px 4px;
+  display: inline-block;
+  position: relative;
+}
+
+/* Additional utility class for containers */
+.animate-container {
+  position: relative;
+  display: inline-block;
+  overflow: visible; /* Allow glow effects to show outside bounds */
+}
