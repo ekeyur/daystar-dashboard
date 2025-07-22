@@ -139,17 +139,23 @@ export default function Home({ searchParams }) {
                   <tr key={index}>
                     <th className="text-left">{row.appeal}</th>
                     <td className="text-right">
-                      <AnimatedValue value={row.us}>{row.us}</AnimatedValue>
+                      <AnimatedValue value={row.us}>
+                        {row.us?.toLocaleString() || 0}
+                      </AnimatedValue>
                     </td>
                     <td className="text-right">
-                      <AnimatedValue value={row.ca}>{row.ca}</AnimatedValue>
+                      <AnimatedValue value={row.ca}>
+                        {row.ca?.toLocaleString() || 0}
+                      </AnimatedValue>
                     </td>
                     <td className="text-right">
-                      <AnimatedValue value={row.intl}>{row.intl}</AnimatedValue>
+                      <AnimatedValue value={row.intl}>
+                        {row.intl?.toLocaleString() || 0}
+                      </AnimatedValue>
                     </td>
                     <td className="text-right">
                       <AnimatedValue value={row.total}>
-                        {row.total}
+                        {row.total?.toLocaleString() || 0}
                       </AnimatedValue>
                     </td>
                   </tr>
@@ -158,22 +164,22 @@ export default function Home({ searchParams }) {
                   <th className="text-left">{tickTotals.appeal}</th>
                   <th className="text-right">
                     <AnimatedValue value={tickTotals.us}>
-                      {tickTotals.us}
+                      {tickTotals.us?.toLocaleString() || 0}
                     </AnimatedValue>
                   </th>
                   <th className="text-right">
                     <AnimatedValue value={tickTotals.ca}>
-                      {tickTotals.ca}
+                      {tickTotals.ca?.toLocaleString() || 0}
                     </AnimatedValue>
                   </th>
                   <th className="text-right">
                     <AnimatedValue value={tickTotals.intl}>
-                      {tickTotals.intl}
+                      {tickTotals.intl?.toLocaleString() || 0}
                     </AnimatedValue>
                   </th>
                   <th className="text-right">
                     <AnimatedValue value={tickTotals.total}>
-                      {tickTotals.total}
+                      {tickTotals.total?.toLocaleString() || 0}
                     </AnimatedValue>
                   </th>
                 </tr>
@@ -184,7 +190,7 @@ export default function Home({ searchParams }) {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-4 w-full mt-4 bg-primary rounded-xl shadow-md px-4 md:px-12">
-        <section className="w-full lg:w-2/3">
+        <section className="w-full lg:w-1/2">
           <h2 className="font-bold text-xl md:text-3xl text-center my-4">
             <AnimatedValue value={campaignTitle}>{campaignTitle}</AnimatedValue>
           </h2>
@@ -230,7 +236,7 @@ export default function Home({ searchParams }) {
           </div>
         </section>
 
-        <section className="w-full lg:w-1/3">
+        <section className="w-full lg:w-1/2">
           <h2 className="font-bold text-xl md:text-3xl text-center my-2 text-white">
             Live vs Web
           </h2>
@@ -239,7 +245,10 @@ export default function Home({ searchParams }) {
               series={[
                 {
                   data: pieChartData,
-                  arcLabel: (item) => `${item.source}: \n${item.label}`,
+                  arcLabel: (item) =>
+                    `${item.source}: ${item.value.toLocaleString()} \n(${
+                      item.label
+                    })`,
                   arcLabelMinAngle: 35,
                   highlightScope: { faded: "global", highlighted: "item" },
                   faded: { innerRadius: 30, additionalRadius: -30 },
@@ -276,11 +285,12 @@ export default function Home({ searchParams }) {
                   >
                     {row.source}:{" "}
                     {piechart
-                      ? row.rawAmount?.toFixed(0).toLocaleString({
+                      ? row.rawAmount?.toLocaleString("en-US", {
                           style: "currency",
                           currency: "USD",
+                          maximumFractionDigits: 0,
                         })
-                      : row.count?.toFixed(0).toLocaleString()}
+                      : row.count?.toLocaleString()}
                   </AnimatedValue>
                 </span>
               </div>
