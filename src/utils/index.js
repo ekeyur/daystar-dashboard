@@ -92,16 +92,7 @@ export const extractSummaryData = (dashboardData) => {
     },
   ];
 
-  const summaryTotals = {
-    source: "TOTAL",
-    count: totalCount,
-    percent: 100,
-    amount: totalAmount,
-    rawAmount: dashboardData?.tickTotal?.amount || 0,
-  };
-
   return {
     summaryRows,
-    summaryTotals,
   };
 };

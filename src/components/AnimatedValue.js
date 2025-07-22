@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const AnimatedValue = ({
   value,
@@ -9,19 +9,36 @@ const AnimatedValue = ({
   hasChanged = false,
 }) => {
   const [isAnimating, setIsAnimating] = useState(false);
-  const [prevValue, setPrevValue] = useState(value);
+  const prevValueRef = useRef(value);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    if (hasChanged || (prevValue !== undefined && value !== prevValue)) {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      prevValueRef.current = value;
+      return;
+    }
+
+    // Only animate if value actually changed and it's not undefined/null
+    if (
+      prevValueRef.current !== undefined &&
+      value !== undefined &&
+      value !== prevValueRef.current &&
+      value !== null &&
+      prevValueRef.current !== null
+    ) {
       setIsAnimating(true);
       const timer = setTimeout(() => {
         setIsAnimating(false);
-      }, 3000);
+      }, 2000);
+
+      prevValueRef.current = value;
 
       return () => clearTimeout(timer);
     }
-    setPrevValue(value);
-  }, [value, prevValue, hasChanged]);
+
+    prevValueRef.current = value;
+  }, [value]);
 
   return (
     <span
