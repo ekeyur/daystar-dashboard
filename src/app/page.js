@@ -1,8 +1,7 @@
 "use client";
-// http://localhost:3000/?piechart=amount
 
-import { PieChart } from "@mui/x-charts/PieChart";
-import { use, useMemo } from "react";
+import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
+import { useMemo } from "react";
 
 import { useDashboardData } from "@/hooks/useApi";
 import {
@@ -14,18 +13,13 @@ import { useAuth } from "@/contexts/authcontext";
 import Header from "@/components/Header";
 import AnimatedValue from "@/components/AnimatedValue";
 
-export default function Home({ searchParams }) {
+export default function Home() {
   const { loading: authLoading } = useAuth();
   const {
     data,
     isLoading: dashboardLoading,
     error: dashboardError,
   } = useDashboardData();
-
-  // Use React.use() to unwrap searchParams
-  const resolvedSearchParams = use(searchParams);
-  const { piechart } = resolvedSearchParams;
-  console.log("Piechart param:", piechart);
 
   const dashboardData = data?.result?.[0]?.outputValues || {};
   const { tickRows, tickTotals } = formatTickDataForTable(dashboardData);
@@ -37,8 +31,19 @@ export default function Home({ searchParams }) {
 
   const tickWebPercent = (dashboardData?.tickWebPercent * 100).toFixed(2) || 0;
 
-  const pieChartData = useMemo(() => {
+  const pieChartDataCount = useMemo(() => {
     const totalCount = summaryRows.reduce((sum, row) => sum + row.count, 0);
+
+    return summaryRows.map((row, index) => ({
+      id: index,
+      value: row.count,
+      label: `${((row.count / totalCount) * 100).toFixed(0)}%`,
+      color: index === 0 ? "#3b82f6" : "#10b981",
+      source: row.source,
+    }));
+  }, [summaryRows]);
+
+  const pieChartDataAmount = useMemo(() => {
     const totalAmount = summaryRows.reduce(
       (sum, row) => sum + row.rawAmount,
       0
@@ -46,14 +51,12 @@ export default function Home({ searchParams }) {
 
     return summaryRows.map((row, index) => ({
       id: index,
-      value: piechart ? row.rawAmount.toFixed(0) : row.count,
-      label: piechart
-        ? `${((row.rawAmount / totalAmount) * 100).toFixed(0)}%`
-        : `${((row.count / totalCount) * 100).toFixed(0)}%`,
+      value: row.rawAmount.toFixed(0),
+      label: `${((row.rawAmount / totalAmount) * 100).toFixed(0)}%`,
       color: index === 0 ? "#3b82f6" : "#10b981",
       source: row.source,
     }));
-  }, [summaryRows, piechart]);
+  }, [summaryRows]);
 
   if (authLoading || dashboardLoading) {
     return (
@@ -236,65 +239,139 @@ export default function Home({ searchParams }) {
           </div>
         </section>
 
-        <section className="w-full lg:w-1/2">
+        <section className="w-full lg:w-1/2 mb-4">
           <h2 className="font-bold text-xl md:text-3xl text-center my-2 text-white">
             Live vs Web
           </h2>
-          <div className="flex items-center justify-center h-60">
-            <PieChart
-              series={[
-                {
-                  data: pieChartData,
-                  arcLabel: (item) =>
-                    `${item.source}: ${item.value.toLocaleString()} \n(${
-                      item.label
-                    })`,
-                  arcLabelMinAngle: 35,
-                  highlightScope: { faded: "global", highlighted: "item" },
-                  faded: { innerRadius: 30, additionalRadius: -30 },
-                },
-              ]}
-              width={400}
-              height={240}
-              slotProps={{
-                legend: { hidden: true },
-                arc: {
-                  style: { stroke: "white", strokeWidth: 2 },
-                },
-              }}
-            />
-          </div>
 
-          {/* Legend */}
-          <div className="flex justify-center gap-6">
-            {summaryRows.map((row, index) => (
-              <div
-                key={`${row.source}-${index}`}
-                className="flex items-center gap-2"
-              >
-                <div
-                  className="w-4 h-4 rounded"
-                  style={{
-                    backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
+          {/* Two pie charts side by side */}
+          <div className="flex flex-col lg:flex-row gap-4 items-center justify-center">
+            {/* Count Chart */}
+            <div className="flex flex-col items-center">
+              <h3 className="font-semibold text-lg text-white mb-2">Count</h3>
+              <div className="flex items-center justify-center h-60">
+                <PieChart
+                  series={[
+                    {
+                      data: pieChartDataCount,
+                      arcLabel: (item) =>
+                        `${item.source}: ${item.value.toLocaleString()} \n(${
+                          item.label
+                        })`,
+                      arcLabelMinAngle: 35,
+                      highlightScope: { faded: "global", highlighted: "item" },
+                      faded: { innerRadius: 30, additionalRadius: -30 },
+                    },
+                  ]}
+                  width={350}
+                  height={240}
+                  sx={{
+                    [`& .${pieArcLabelClasses.root}`]: {
+                      fill: 'white',
+                      fontWeight: 'bold',
+                      fontSize: 14,
+                    },
                   }}
-                ></div>
-                <span className="text-white font-semibold">
-                  <AnimatedValue
-                    value={piechart ? row.rawAmount : row.count}
-                    key={`legend-${row.source}`}
+                  slotProps={{
+                    legend: { hidden: true },
+                    arc: {
+                      style: { stroke: "white", strokeWidth: 2 },
+                    },
+                  }}
+                />
+              </div>
+
+              {/* Count Legend */}
+              <div className="flex justify-center gap-4 mt-2">
+                {summaryRows.map((row, index) => (
+                  <div
+                    key={`count-${row.source}-${index}`}
+                    className="flex items-center gap-2"
                   >
-                    {row.source}:{" "}
-                    {piechart
-                      ? row.rawAmount?.toLocaleString("en-US", {
+                    <div
+                      className="w-3 h-3 rounded"
+                      style={{
+                        backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
+                      }}
+                    ></div>
+                    <span className="text-white text-sm font-semibold">
+                      <AnimatedValue
+                        value={row.count}
+                        key={`count-legend-${row.source}`}
+                      >
+                        {row.source}: {row.count?.toLocaleString()}
+                      </AnimatedValue>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Amount Chart */}
+            <div className="flex flex-col items-center">
+              <h3 className="font-semibold text-lg text-white mb-2">Amount</h3>
+              <div className="flex items-center justify-center h-60">
+                <PieChart
+                  series={[
+                    {
+                      data: pieChartDataAmount,
+                      arcLabel: (item) =>
+                        `${item.source}: ${parseInt(
+                          item.value
+                        ).toLocaleString()} \n(${item.label})`,
+                      arcLabelMinAngle: 35,
+                      highlightScope: { faded: "global", highlighted: "item" },
+                      faded: { innerRadius: 30, additionalRadius: -30 },
+                    },
+                  ]}
+                  width={350}
+                  height={240}
+                  sx={{
+                    [`& .${pieArcLabelClasses.root}`]: {
+                      fill: 'white',
+                      fontWeight: 'bold',
+                      fontSize: 14,
+                    },
+                  }}
+                  slotProps={{
+                    legend: { hidden: true },
+                    arc: {
+                      style: { stroke: "white", strokeWidth: 2 },
+                    },
+                  }}
+                />
+              </div>
+
+              {/* Amount Legend */}
+              <div className="flex justify-center gap-4 mt-2">
+                {summaryRows.map((row, index) => (
+                  <div
+                    key={`amount-${row.source}-${index}`}
+                    className="flex items-center gap-2"
+                  >
+                    <div
+                      className="w-3 h-3 rounded"
+                      style={{
+                        backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
+                      }}
+                    ></div>
+                    <span className="text-white text-sm font-semibold">
+                      <AnimatedValue
+                        value={row.rawAmount}
+                        key={`amount-legend-${row.source}`}
+                      >
+                        {row.source}:{" "}
+                        {row.rawAmount?.toLocaleString("en-US", {
                           style: "currency",
                           currency: "USD",
                           maximumFractionDigits: 0,
-                        })
-                      : row.count?.toLocaleString()}
-                  </AnimatedValue>
-                </span>
+                        })}
+                      </AnimatedValue>
+                    </span>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
         </section>
       </div>
