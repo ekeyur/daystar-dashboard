@@ -267,8 +267,8 @@ export default function Home() {
                   height={240}
                   sx={{
                     [`& .${pieArcLabelClasses.root}`]: {
-                      fill: 'white',
-                      fontWeight: 'bold',
+                      fill: "white",
+                      fontWeight: "bold",
                       fontSize: 14,
                     },
                   }}
@@ -316,7 +316,7 @@ export default function Home() {
                     {
                       data: pieChartDataAmount,
                       arcLabel: (item) =>
-                        `${item.source}: ${parseInt(
+                        `${item.source}: $${parseInt(
                           item.value
                         ).toLocaleString()} \n(${item.label})`,
                       arcLabelMinAngle: 35,
@@ -328,8 +328,8 @@ export default function Home() {
                   height={240}
                   sx={{
                     [`& .${pieArcLabelClasses.root}`]: {
-                      fill: 'white',
-                      fontWeight: 'bold',
+                      fill: "white",
+                      fontWeight: "bold",
                       fontSize: 14,
                     },
                   }}
