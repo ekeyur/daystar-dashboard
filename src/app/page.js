@@ -29,7 +29,7 @@ export default function Home() {
 
   const { summaryRows } = extractSummaryData(dashboardData);
 
-  const tickWebPercent = (dashboardData?.tickWebPercent * 100).toFixed(2) || 0;
+  const tickWebPercent = (dashboardData?.tickWebPercent * 100).toFixed(0) || 0;
 
   const pieChartDataCount = useMemo(() => {
     const totalCount = summaryRows.reduce((sum, row) => sum + row.count, 0);
