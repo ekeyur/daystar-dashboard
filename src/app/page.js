@@ -114,6 +114,7 @@ export default function Home() {
               value={dashboardData?.tickTotal?.amount}
               animationType="value-changed-currency"
             >
+              Segment:{" "}
               {dashboardData?.tickTotal?.amount?.toLocaleString("en-US", {
                 style: "currency",
                 currency: "USD",
@@ -240,9 +241,9 @@ export default function Home() {
         </section>
 
         <section className="w-full lg:w-1/2 mb-4">
-          <h2 className="font-bold text-xl md:text-3xl text-center my-2 text-white">
+          {/* <h2 className="font-bold text-xl md:text-3xl text-center my-2 text-white">
             Live vs Web
-          </h2>
+          </h2> */}
 
           {/* Two pie charts side by side */}
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-center">
@@ -294,12 +295,13 @@ export default function Home() {
                         backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
                       }}
                     ></div>
-                    <span className="text-white text-sm font-semibold">
+                    <span className="text-white text-xl font-semibold">
                       <AnimatedValue
                         value={row.count}
                         key={`count-legend-${row.source}`}
                       >
-                        {row.source}: {row.count?.toLocaleString()}
+                        <span className="text-lg">{row.source}</span>:{" "}
+                        {row.count?.toLocaleString()}
                       </AnimatedValue>
                     </span>
                   </div>
@@ -355,12 +357,12 @@ export default function Home() {
                         backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
                       }}
                     ></div>
-                    <span className="text-white text-sm font-semibold">
+                    <span className="text-white text-2xl font-semibold">
                       <AnimatedValue
                         value={row.rawAmount}
                         key={`amount-legend-${row.source}`}
                       >
-                        {row.source}:{" "}
+                        <span className="text-lg">{row.source}</span>:{" "}
                         {row.rawAmount?.toLocaleString("en-US", {
                           style: "currency",
                           currency: "USD",

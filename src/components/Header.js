@@ -38,9 +38,9 @@ function Header() {
             <div className="text-sm md:text-md flex gap-4 items-center">
               <div className="relative inline-block">{formattedDate}</div>
               <div className="relative inline-block">
-                <AnimatedValue value={formattedTime} className="relative z-10">
-                  {formattedTime}
-                </AnimatedValue>
+                {/* <AnimatedValue value={formattedTime} className="relative z-10"> */}
+                {formattedTime}
+                {/* </AnimatedValue> */}
               </div>
             </div>
           </div>
