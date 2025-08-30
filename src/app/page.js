@@ -29,6 +29,11 @@ export default function Home() {
 
   const { summaryRows } = extractSummaryData(dashboardData);
 
+  const summaryTotal = useMemo(
+    () => summaryRows.reduce((total, curr) => total + curr.rawAmount, 0),
+    [summaryRows]
+  );
+
   const tickWebPercent = (dashboardData?.tickWebPercent * 100).toFixed(0) || 0;
 
   const pieChartDataCount = useMemo(() => {
@@ -95,6 +100,19 @@ export default function Home() {
           )}
         </div>
         <div className="flex flex-col items-center justify-center my-2 gap-2 lg:flex-row lg:gap-4">
+          <div className="font-bold text-2xl lg:text-4xl text-secondary">
+            <AnimatedValue
+              value={dashboardData?.tickTotal?.amount}
+              animationType="value-changed-currency"
+            >
+              Segment:{" "}
+              {dashboardData?.tickTotal?.amount?.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+                maximumFractionDigits: 0,
+              }) || 0}
+            </AnimatedValue>
+          </div>
           <div
             className="font-bold radial-progress bg-primary text-primary-content border-primary border-4 flex flex-col items-center justify-center"
             style={{ "--value": tickWebPercent }}
@@ -108,19 +126,6 @@ export default function Home() {
               {tickWebPercent}%
             </AnimatedValue>
             <span className="block text-xs lg:text-sm">web</span>
-          </div>
-          <div className="font-bold text-2xl lg:text-4xl text-secondary">
-            <AnimatedValue
-              value={dashboardData?.tickTotal?.amount}
-              animationType="value-changed-currency"
-            >
-              Segment:{" "}
-              {dashboardData?.tickTotal?.amount?.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-                maximumFractionDigits: 0,
-              }) || 0}
-            </AnimatedValue>
           </div>
         </div>
       </div>
@@ -193,10 +198,17 @@ export default function Home() {
         </section>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-4 w-full mt-4 bg-primary rounded-xl shadow-md px-4 md:px-12">
-        <section className="w-full lg:w-1/2">
+      <div className="flex flex-col xl:flex-row gap-4 w-full mt-4 bg-primary rounded-xl shadow-md px-4 md:px-12">
+        <section className="w-full xl:w-1/2">
           <h2 className="font-bold text-xl md:text-3xl text-center my-4">
-            <AnimatedValue value={campaignTitle}>{campaignTitle}</AnimatedValue>
+            <AnimatedValue value={summaryTotal}>
+              {campaignTitle}:{" "}
+              {summaryTotal.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+                maximumFractionDigits: 0,
+              }) || 0}
+            </AnimatedValue>
           </h2>
           <div className="overflow-x-auto font-bold">
             <table className="table w-full text-md md:text-xl">
@@ -240,13 +252,13 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="w-full lg:w-1/2 mb-4">
+        <section className="w-full xl:w-1/2 mb-4">
           {/* <h2 className="font-bold text-xl md:text-3xl text-center my-2 text-white">
             Live vs Web
           </h2> */}
 
           {/* Two pie charts side by side */}
-          <div className="flex flex-col lg:flex-row gap-4 items-center justify-center">
+          <div className="flex flex-col xl:flex-row gap-4 items-center justify-center">
             {/* Count Chart */}
             <div className="flex flex-col items-center">
               <h3 className="font-semibold text-lg text-white mb-2">Count</h3>
@@ -255,10 +267,10 @@ export default function Home() {
                   series={[
                     {
                       data: pieChartDataCount,
-                      arcLabel: (item) =>
-                        `${item.source}: ${item.value.toLocaleString()} \n(${
-                          item.label
-                        })`,
+                      arcLabel: (item) => ``,
+                      // `${item.source}: ${item.value.toLocaleString()} \n(${
+                      //   item.label
+                      // })`,
                       arcLabelMinAngle: 35,
                       highlightScope: { faded: "global", highlighted: "item" },
                       faded: { innerRadius: 30, additionalRadius: -30 },
@@ -317,10 +329,10 @@ export default function Home() {
                   series={[
                     {
                       data: pieChartDataAmount,
-                      arcLabel: (item) =>
-                        `${item.source}: $${parseInt(
-                          item.value
-                        ).toLocaleString()} \n(${item.label})`,
+                      arcLabel: (item) => ``,
+                      // `${item.source}: $${parseInt(
+                      //   item.value
+                      // ).toLocaleString()} \n(${item.label})`,
                       arcLabelMinAngle: 35,
                       highlightScope: { faded: "global", highlighted: "item" },
                       faded: { innerRadius: 30, additionalRadius: -30 },

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import AnimatedValue from "@/components/AnimatedValue";
+// import AnimatedValue from "@/components/AnimatedValue";
 
 function Header() {
   const currentDate = new Date();
