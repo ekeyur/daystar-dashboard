@@ -22,7 +22,7 @@ function Header() {
 
   return (
     <div>
-      <nav className="navbar p-2 bg-white shadow-sm rounded-sm text-primary px-2 md:px-4">
+      <nav className="navbar py-0.5 px-0.5 bg-white shadow-sm rounded-sm text-primary md:px-4">
         <div className="navbar-start">
           <Image
             src="/daystar_logo.png"
@@ -34,8 +34,8 @@ function Header() {
         </div>
         <div className="navbar-center hidden lg:flex"></div>
         <div className="navbar-end">
-          <div className="flex items-end flex-row flex-wrap font-bold gap-2">
-            <div className="text-sm md:text-md flex gap-4 items-center">
+          <div className="flex items-end flex-row font-bold gap-1">
+            <div className="text-xs leading-tight md:text-lg flex gap-1 md:gap-4 items-center">
               <div className="relative inline-block">{formattedDate}</div>
               <div className="relative inline-block">
                 {/* <AnimatedValue value={formattedTime} className="relative z-10"> */}

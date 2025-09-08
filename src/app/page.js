@@ -84,15 +84,15 @@ export default function Home() {
   return (
     <div className="">
       <Header />
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full lg:gap-4 px-4 md:px-12">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full lg:gap-4 px-2 md:px-12">
         <div>
-          <h1 className="font-bold text-xl md:text-4xl text-center lg:text-left lg:flex-1">
+          <h1 className="font-bold text-lg md:text-4xl text-center lg:text-left lg:flex-1">
             <AnimatedValue value={dashboardData.tickTitle}>
               {dashboardData.tickTitle}
             </AnimatedValue>
           </h1>
           {!!dashboardData?.tickSubtitle && (
-            <h2 className="font-light lg:font-bold text-sm md:text-md text-center lg:text-left lg:flex-1">
+            <h2 className="font-light lg:font-bold text-xs md:text-md text-center lg:text-left lg:flex-1">
               <AnimatedValue value={dashboardData.tickSubtitle}>
                 {dashboardData?.tickSubtitle}
               </AnimatedValue>
@@ -100,7 +100,7 @@ export default function Home() {
           )}
         </div>
         <div className="flex flex-col items-center justify-center my-2 gap-2 lg:flex-row lg:gap-4">
-          <div className="font-bold text-2xl lg:text-4xl text-secondary">
+          <div className="font-bold text-lg lg:text-4xl text-secondary">
             <AnimatedValue
               value={dashboardData?.tickTotal?.amount}
               animationType="value-changed-currency"
@@ -114,7 +114,7 @@ export default function Home() {
             </AnimatedValue>
           </div>
           <div
-            className="font-bold radial-progress bg-primary text-primary-content border-primary border-4 flex flex-col items-center justify-center"
+            className="font-bold radial-progress bg-primary text-primary-content border-primary border-4 flex-col items-center justify-center hidden lg:flex"
             style={{ "--value": tickWebPercent }}
             aria-valuenow={tickWebPercent}
             role="progressbar"
@@ -130,23 +130,23 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-4 w-full p-4 md:px-12">
+      <div className="flex flex-col lg:flex-row gap-4 w-full px-2 py-4 md:px-12">
         <section className="w-full">
-          <div className="overflow-x-auto font-bold">
-            <table className="table w-full text-md md:text-xl">
+          <div className="font-bold">
+            <table className="table w-full text-sm md:text-xl table-fixed">
               <thead>
                 <tr className="text-xs md:text-2xl">
-                  <th className="text-left">APPEAL</th>
-                  <th className="text-right">US</th>
-                  <th className="text-right">CA</th>
-                  <th className="text-right">INTL</th>
-                  <th className="text-right">TOTAL</th>
+                  <th className="text-left w-2/5">APPEAL</th>
+                  <th className="text-right w-2/12">US</th>
+                  <th className="text-right w-2/12">CA</th>
+                  <th className="text-right w-2/12">INTL</th>
+                  <th className="text-right w-1/6">TOTAL</th>
                 </tr>
               </thead>
               <tbody>
                 {tickRows.map((row, index) => (
                   <tr key={index}>
-                    <th className="text-left">{row.appeal}</th>
+                    <th className="text-left truncate">{row.appeal}</th>
                     <td className="text-right">
                       <AnimatedValue value={row.us}>
                         {row.us?.toLocaleString() || 0}
@@ -170,7 +170,7 @@ export default function Home() {
                   </tr>
                 ))}
                 <tr className="text-xs md:text-2xl bg-base-200">
-                  <th className="text-left">{tickTotals.appeal}</th>
+                  <th className="text-left truncate">{tickTotals.appeal}</th>
                   <th className="text-right">
                     <AnimatedValue value={tickTotals.us}>
                       {tickTotals.us?.toLocaleString() || 0}
@@ -198,9 +198,9 @@ export default function Home() {
         </section>
       </div>
 
-      <div className="flex flex-col xl:flex-row gap-4 w-full mt-4 bg-primary rounded-xl shadow-md px-4 md:px-12">
+      <div className="flex flex-col xl:flex-row gap-4 w-full mt-4 bg-primary rounded-xl shadow-md px-2 md:px-12">
         <section className="w-full xl:w-1/2">
-          <h2 className="font-bold text-xl md:text-3xl text-center my-4">
+          <h2 className="font-bold text-lg md:text-3xl text-center my-4">
             <AnimatedValue value={summaryTotal}>
               {campaignTitle}:{" "}
               {summaryTotal.toLocaleString("en-US", {
@@ -210,21 +210,21 @@ export default function Home() {
               }) || 0}
             </AnimatedValue>
           </h2>
-          <div className="overflow-x-auto font-bold">
-            <table className="table w-full text-md md:text-xl">
+          <div className="font-bold">
+            <table className="table w-full text-sm md:text-xl table-fixed">
               <thead>
                 <tr className="text-xs md:text-2xl">
-                  <th className="text-left">Category</th>
-                  <th className="text-right">US</th>
-                  <th className="text-right">CA</th>
-                  <th className="text-right">INTL</th>
-                  <th className="text-right">TOTAL</th>
+                  <th className="text-left w-2/5">Category</th>
+                  <th className="text-right w-2/12">US</th>
+                  <th className="text-right w-2/12">CA</th>
+                  <th className="text-right w-2/12">INTL</th>
+                  <th className="text-right w-1/6">TOTAL</th>
                 </tr>
               </thead>
               <tbody>
                 {campaignRows.map((row, index) => (
                   <tr key={index}>
-                    <th className="text-left">{row.header}</th>
+                    <th className="text-left truncate">{row.header}</th>
                     <td className="text-right">
                       <AnimatedValue value={row.us}>
                         {row.us?.toLocaleString() || 0}
