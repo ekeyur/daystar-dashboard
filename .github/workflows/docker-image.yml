@@ -1,0 +1,37 @@
+name: Build and Export Docker Image on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-export:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image with version labels
+        run: |
+          VERSION="${{ github.ref_name }}"
+          docker build \
+            --label "org.opencontainers.image.version=${VERSION}" \
+            --label "org.opencontainers.image.created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
+            --label "org.opencontainers.image.source=${{ github.repository }}" \
+            -t my-image:${VERSION} \
+            -t my-image:latest \
+            .
+
+      - name: Save Docker image to tar file
+        run: |
+          docker save ticker-totals:${{ github.ref_name }} -o my-image-${{ github.ref_name }}.tar
+
+      - name: Upload image tar as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-image-tar
+          path: my-image-${{ github.ref_name }}.tar
