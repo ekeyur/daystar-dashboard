@@ -31,7 +31,7 @@ jobs:
           docker save ticker-totals:${{ github.ref_name }} -o my-image-${{ github.ref_name }}.tar
 
       - name: Upload image tar as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: my-image-tar
           path: my-image-${{ github.ref_name }}.tar
