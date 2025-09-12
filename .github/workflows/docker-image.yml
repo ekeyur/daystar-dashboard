@@ -22,16 +22,16 @@ jobs:
             --label "org.opencontainers.image.version=${VERSION}" \
             --label "org.opencontainers.image.created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
             --label "org.opencontainers.image.source=${{ github.repository }}" \
-            -t my-image:${VERSION} \
-            -t my-image:latest \
+            -t ticker-totals:${VERSION} \
+            -t ticker-totals:latest \
             .
 
       - name: Save Docker image to tar file
         run: |
-          docker save ticker-totals:${{ github.ref_name }} -o my-image-${{ github.ref_name }}.tar
+          docker save ticker-totals:${{ github.ref_name }} -o ticker-totals-${{ github.ref_name }}.tar
 
       - name: Upload image tar as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: my-image-tar
-          path: my-image-${{ github.ref_name }}.tar
+          name: ticker-totals-tar
+          path: ticker-totals-${{ github.ref_name }}.tar
