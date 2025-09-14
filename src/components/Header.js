@@ -22,8 +22,8 @@ function Header() {
 
   return (
     <div>
-      <nav className="navbar py-0.5 px-0.5 bg-white shadow-sm rounded-sm text-primary md:px-4">
-        <div className="navbar-start">
+      <nav className="navbar py-0.5 px-0.5 bg-black shadow-sm rounded-sm text-white md:px-4">
+        <div className="navbar-start pl-2 md:pl-0">
           <Image
             src="/daystar_logo.png"
             priority={false}
