@@ -81,7 +81,7 @@ export default function DashboardClient({
               <h3 className="font-semibold text-lg text-white mb-2 hidden lg:block">
                 Count
               </h3>
-              <div className="flex items-center justify-center h-60 hidden lg:flex">
+              <div className="items-center justify-center h-60 hidden lg:flex">
                 <PieChart
                   series={[
                     {
@@ -164,7 +164,7 @@ export default function DashboardClient({
               <h3 className="font-semibold text-lg text-white mb-2 hidden lg:block">
                 Amount
               </h3>
-              <div className="flex items-center justify-center h-60 hidden lg:flex">
+              <div className="items-center justify-center h-60 hidden lg:flex">
                 <PieChart
                   series={[
                     {
@@ -270,7 +270,7 @@ export default function DashboardClient({
             </h2>
           )}
         </div>
-        <div className="flex flex-col items-center justify-center my-1 gap-1 lg:my-2 lg:gap-2 lg:flex-row lg:gap-4">
+        <div className="flex flex-col items-center justify-center my-1 gap-1 lg:my-2 lg:gap-2 lg:flex-row">
           <div className="font-bold text-lg lg:text-4xl text-secondary">
             <AnimatedValue
               value={dashboardData?.tickTotal?.amount}
