@@ -22,16 +22,16 @@ export function useDashboardStream() {
         }
       } catch (err) {
         console.error('Error parsing SSE data:', err);
-        setError(new Error('Failed to parse dashboard data'));
+        // Don't set error state, just log and continue with previous data
         setIsLoading(false);
       }
     };
 
     eventSource.onerror = (event) => {
       console.error('SSE connection error:', event);
-      setError(new Error('Connection to dashboard stream failed'));
-      setIsLoading(false);
-      
+      // Don't set error state to avoid showing error message to user
+      // Just keep the previous data and try to reconnect silently
+
       // Try to reconnect after 5 seconds
       setTimeout(() => {
         eventSource.close();
