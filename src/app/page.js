@@ -6,10 +6,48 @@ import {
   extractSummaryData,
 } from "@/utils";
 import DashboardClient from "@/components/DashboardClient";
-import { useDashboardStream } from "@/hooks/useDashboardStream";
+import { useDashboardData } from "@/hooks/useDashboardData";
 
 export default function Home() {
-  const { data: dashboardData, isLoading, error } = useDashboardStream();
+  const { data: dashboardData, isLoading, error, isHydrated } = useDashboardData();
+
+  // Show loading until hydrated
+  if (!isHydrated) {
+    return (
+      <div className="flex items-center justify-center h-100 flex-col gap-4">
+        <span className="loading loading-spinner loading-xl"></span>
+        <div className="text-center">
+          <p>Hydrating...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show debug info if still loading data
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-100 flex-col gap-4">
+        <span className="loading loading-spinner loading-xl"></span>
+        <div className="text-center">
+          <p>Hydrated: {isHydrated ? "Yes" : "No"}</p>
+          <p>Loading: {isLoading ? "Yes" : "No"}</p>
+          {error && <p className="text-red-500">Error: {error.message}</p>}
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-100">
+        <span className="text-red-500">
+          Error loading dashboard data: {error.message}
+        </span>
+      </div>
+    );
+  }
+
+  // Only process data after loading is complete
   const { tickRows, tickTotals } = formatTickDataForTable(dashboardData);
   const { campaignTitle, campaignRows } = formatCampaignDataForTable(dashboardData);
   const { summaryRows } = extractSummaryData(dashboardData);
@@ -34,24 +72,6 @@ export default function Home() {
     color: index === 0 ? "#3b82f6" : "#10b981",
     source: row.source,
   }));
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-100">
-        <span className="loading loading-spinner loading-xl"></span>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center h-100">
-        <span className="text-red-500">
-          Error loading dashboard data: {error.message}
-        </span>
-      </div>
-    );
-  }
 
   return (
     <DashboardClient
