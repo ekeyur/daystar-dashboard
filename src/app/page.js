@@ -9,28 +9,29 @@ import DashboardClient from "@/components/DashboardClient";
 import { useDashboardData } from "@/hooks/useDashboardData";
 
 export default function Home() {
-  const { data: dashboardData, isLoading, error, isHydrated } = useDashboardData();
+  const {
+    data: dashboardData,
+    isLoading,
+    error,
+    isHydrated,
+  } = useDashboardData();
 
-  // Show loading until hydrated
   if (!isHydrated) {
     return (
       <div className="flex items-center justify-center h-100 flex-col gap-4">
         <span className="loading loading-spinner loading-xl"></span>
         <div className="text-center">
-          <p>Hydrating...</p>
+          <p></p>
         </div>
       </div>
     );
   }
 
-  // Show debug info if still loading data
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-100 flex-col gap-4">
         <span className="loading loading-spinner loading-xl"></span>
         <div className="text-center">
-          <p>Hydrated: {isHydrated ? "Yes" : "No"}</p>
-          <p>Loading: {isLoading ? "Yes" : "No"}</p>
           {error && <p className="text-red-500">Error: {error.message}</p>}
         </div>
       </div>
@@ -47,12 +48,15 @@ export default function Home() {
     );
   }
 
-  // Only process data after loading is complete
   const { tickRows, tickTotals } = formatTickDataForTable(dashboardData);
-  const { campaignTitle, campaignRows } = formatCampaignDataForTable(dashboardData);
+  const { campaignTitle, campaignRows } =
+    formatCampaignDataForTable(dashboardData);
   const { summaryRows } = extractSummaryData(dashboardData);
 
-  const summaryTotal = summaryRows.reduce((total, curr) => total + curr.rawAmount, 0);
+  const summaryTotal = summaryRows.reduce(
+    (total, curr) => total + curr.rawAmount,
+    0
+  );
   const tickWebPercent = (dashboardData?.tickWebPercent * 100).toFixed(0) || 0;
 
   const totalCount = summaryRows.reduce((sum, row) => sum + row.count, 0);

@@ -76,7 +76,7 @@ export default function DashboardClient({
         </section>
 
         <section className="w-full xl:w-1/2 mb-4">
-          <div className="flex flex-col xl:flex-row gap-4 items-center justify-center">
+          <div className="flex flex-col xl:flex-row gap-1 items-center justify-center">
             <div className="flex flex-col items-center">
               <h3 className="font-semibold text-lg text-white mb-2 hidden lg:block">
                 Count
