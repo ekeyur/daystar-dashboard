@@ -19,7 +19,7 @@ export default function DashboardClient({
   return (
     <div className="">
       <Header />
-      <div className="flex flex-col xl:flex-row gap-4 w-full mt-1 lg:mt-4 bg-primary rounded-xl shadow-md px-2 md:px-12">
+      <div className="flex flex-col xl:flex-row gap-4 w-full mt-1 lg:mt-4 bg-black rounded-xl shadow-md px-2 md:px-12">
         <section className="w-full xl:w-1/2">
           <h2 className="font-bold text-lg md:text-3xl text-center my-2 lg:my-4">
             <AnimatedValue value={summaryTotal}>
