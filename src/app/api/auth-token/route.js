@@ -3,18 +3,19 @@ import { NextResponse } from "next/server";
 
 export async function POST() {
   try {
-    const body = {
+    const loginBase =
+      process.env.SALESFORCE_INSTANCE_URL ??
+      "https://test.salesforce.com";
+
+    const url = `${loginBase}/services/oauth2/token`;
+    const body = new URLSearchParams({
       grant_type: "client_credentials",
       client_id: process.env.SALESFORCE_CLIENT_ID,
       client_secret: process.env.SALESFORCE_CLIENT_SECRET,
-    };
+    });
 
-    const url = `${process.env.SALESFORCE_INSTANCE_URL}/services/oauth2/token`;
-
-    const response = await axios.post(url, body, {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
+    const response = await axios.post(url, body.toString(), {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
 
     const {
