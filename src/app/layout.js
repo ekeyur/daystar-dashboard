@@ -2,8 +2,8 @@ import { AuthProvider } from "@/contexts/authcontext";
 import "./globals.css";
 
 export const metadata = {
-  title: "Campaign Dashboard",
-  description: "Current Campaign Dashboard | Daystar",
+  title: "Live Ticker",
+  description: "Live Ticker | Daystar",
 };
 
 export default function RootLayout({ children }) {

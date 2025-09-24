@@ -21,7 +21,7 @@ export default function DashboardClient({
       <Header />
       <div className="flex flex-col xl:flex-row gap-4 w-full mt-1 lg:mt-4 bg-black rounded-xl shadow-md px-2 md:px-12">
         <section className="w-full xl:w-1/2">
-          <h2 className="font-bold text-lg md:text-3xl text-center my-2 lg:my-4">
+          <h2 className="font-bold text-2xl md:text-3xl text-center my-2 lg:my-4">
             <AnimatedValue value={summaryTotal}>
               {campaignTitle}:{" "}
               {summaryTotal.toLocaleString("en-US", {
@@ -31,6 +31,58 @@ export default function DashboardClient({
               }) || 0}
             </AnimatedValue>
           </h2>
+          <div className="justify-center gap-4 mt-2 flex lg:hidden">
+            {summaryRows.map((row, index) => (
+              <div
+                key={`count-${row.source}-${index}`}
+                className="flex items-center gap-2"
+              >
+                {/* <div
+                  className="w-3 h-3 rounded"
+                  style={{
+                    backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
+                  }}
+                ></div> */}
+                <span className="text-white text-xl font-semibold">
+                  <AnimatedValue
+                    value={row.count}
+                    key={`count-legend-${row.source}`}
+                  >
+                    <span className="text-lg">{row.source}</span>:{" "}
+                    {row.count?.toLocaleString()}
+                  </AnimatedValue>
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="justify-center gap-4 mt-2 flex lg:hidden">
+            {summaryRows.map((row, index) => (
+              <div
+                key={`amount-${row.source}-${index}`}
+                className="flex items-center gap-2"
+              >
+                {/* <div
+                  className="w-3 h-3 rounded"
+                  style={{
+                    backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
+                  }}
+                ></div> */}
+                <span className="text-white text-md font-semibold">
+                  <AnimatedValue
+                    value={row.rawAmount}
+                    key={`amount-legend-${row.source}`}
+                  >
+                    <span className="text-lg">{row.source}</span>:{" "}
+                    {row.rawAmount?.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      maximumFractionDigits: 0,
+                    })}
+                  </AnimatedValue>
+                </span>
+              </div>
+            ))}
+          </div>
           <div className="font-bold">
             <table className="table w-full text-sm md:text-xl table-fixed compact">
               <thead>
@@ -110,7 +162,7 @@ export default function DashboardClient({
                 />
               </div>
 
-              <div className="flex justify-center gap-2 lg:gap-4 mt-1 lg:hidden">
+              <div className="justify-center gap-2 lg:gap-4 mt-1 hidden lg:flex">
                 {summaryRows.map((row, index) => (
                   <div
                     key={`count-${row.source}-${index}`}
@@ -129,30 +181,6 @@ export default function DashboardClient({
                       >
                         <span className="text-xs lg:text-lg">{row.source}</span>
                         : {row.count?.toLocaleString()}
-                      </AnimatedValue>
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <div className="justify-center gap-4 mt-2 hidden lg:flex">
-                {summaryRows.map((row, index) => (
-                  <div
-                    key={`count-${row.source}-${index}`}
-                    className="flex items-center gap-2"
-                  >
-                    <div
-                      className="w-3 h-3 rounded"
-                      style={{
-                        backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
-                      }}
-                    ></div>
-                    <span className="text-white text-xl font-semibold">
-                      <AnimatedValue
-                        value={row.count}
-                        key={`count-legend-${row.source}`}
-                      >
-                        <span className="text-lg">{row.source}</span>:{" "}
-                        {row.count?.toLocaleString()}
                       </AnimatedValue>
                     </span>
                   </div>
@@ -193,7 +221,7 @@ export default function DashboardClient({
                 />
               </div>
 
-              <div className="flex justify-center gap-2 lg:gap-4 mt-1 lg:hidden">
+              <div className="hidden justify-center gap-2 lg:gap-4 mt-1 lg:flex">
                 {summaryRows.map((row, index) => (
                   <div
                     key={`amount-${row.source}-${index}`}
@@ -212,34 +240,6 @@ export default function DashboardClient({
                       >
                         <span className="text-xs lg:text-lg">{row.source}</span>
                         :{" "}
-                        {row.rawAmount?.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                          maximumFractionDigits: 0,
-                        })}
-                      </AnimatedValue>
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <div className="justify-center gap-4 mt-2 hidden lg:flex">
-                {summaryRows.map((row, index) => (
-                  <div
-                    key={`amount-${row.source}-${index}`}
-                    className="flex items-center gap-2"
-                  >
-                    <div
-                      className="w-3 h-3 rounded"
-                      style={{
-                        backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
-                      }}
-                    ></div>
-                    <span className="text-white text-2xl font-semibold">
-                      <AnimatedValue
-                        value={row.rawAmount}
-                        key={`amount-legend-${row.source}`}
-                      >
-                        <span className="text-lg">{row.source}</span>:{" "}
                         {row.rawAmount?.toLocaleString("en-US", {
                           style: "currency",
                           currency: "USD",
