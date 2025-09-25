@@ -19,16 +19,18 @@ export default function DashboardClient({
   return (
     <div className="">
       <Header />
-      <div className="flex flex-col xl:flex-row gap-4 w-full mt-1 lg:mt-4 bg-black rounded-xl shadow-md px-2 md:px-12">
+      <div className="flex flex-col xl:flex-row gap-4 w-full mt-1 lg:mt-4 bg-blue-800 rounded-xl shadow-md px-2 md:px-12">
         <section className="w-full xl:w-1/2">
           <h2 className="font-bold text-2xl md:text-3xl text-center my-2 lg:my-4">
             <AnimatedValue value={summaryTotal}>
               {campaignTitle}:{" "}
-              {summaryTotal.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD",
-                maximumFractionDigits: 0,
-              }) || 0}
+              <span className="text-amber-300 text-shadow-md">
+                {summaryTotal.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  maximumFractionDigits: 0,
+                }) || 0}
+              </span>
             </AnimatedValue>
           </h2>
           <div className="justify-center gap-4 mt-2 flex lg:hidden">
@@ -49,7 +51,9 @@ export default function DashboardClient({
                     key={`count-legend-${row.source}`}
                   >
                     <span className="text-lg">{row.source}</span>:{" "}
-                    {row.count?.toLocaleString()}
+                    <span className="text-amber-300 text-shadow-md">
+                      {row.count?.toLocaleString()}
+                    </span>
                   </AnimatedValue>
                 </span>
               </div>
@@ -67,17 +71,19 @@ export default function DashboardClient({
                     backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
                   }}
                 ></div> */}
-                <span className="text-white text-md font-semibold">
+                <span className="text-white text-lg font-semibold">
                   <AnimatedValue
                     value={row.rawAmount}
                     key={`amount-legend-${row.source}`}
                   >
                     <span className="text-lg">{row.source}</span>:{" "}
-                    {row.rawAmount?.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                      maximumFractionDigits: 0,
-                    })}
+                    <span className="text-amber-300 text-shadow-md">
+                      {row.rawAmount?.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                        maximumFractionDigits: 0,
+                      })}
+                    </span>
                   </AnimatedValue>
                 </span>
               </div>
@@ -179,8 +185,15 @@ export default function DashboardClient({
                         value={row.count}
                         key={`count-legend-${row.source}`}
                       >
-                        <span className="text-xs lg:text-lg">{row.source}</span>
-                        : {row.count?.toLocaleString()}
+                        <div className="">
+                          <span className="text-xs lg:text-lg">
+                            {row.source}
+                          </span>
+                          :{" "}
+                          <span className="text-amber-300 text-shadow-md">
+                            {row.count?.toLocaleString()}
+                          </span>
+                        </div>
                       </AnimatedValue>
                     </span>
                   </div>
@@ -240,11 +253,13 @@ export default function DashboardClient({
                       >
                         <span className="text-xs lg:text-lg">{row.source}</span>
                         :{" "}
-                        {row.rawAmount?.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                          maximumFractionDigits: 0,
-                        })}
+                        <span className="text-amber-300 text-shadow-md">
+                          {row.rawAmount?.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                            maximumFractionDigits: 0,
+                          })}
+                        </span>
                       </AnimatedValue>
                     </span>
                   </div>
@@ -301,7 +316,7 @@ export default function DashboardClient({
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-4 w-full px-2 py-1 md:px-12 md:py-4">
+      <div className="flex flex-col lg:flex-row gap-4 w-full px-2 py-1 md:px-12 md:py-4 bg-black">
         <section className="w-full">
           <div className="font-bold">
             <table className="table w-full text-sm md:text-xl table-fixed compact">
