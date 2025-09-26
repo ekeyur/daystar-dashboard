@@ -21,74 +21,110 @@ export default function DashboardClient({
       <Header />
       <div className="flex flex-col xl:flex-row gap-4 w-full mt-1 lg:mt-4 bg-blue-800 rounded-xl shadow-md px-2 md:px-12">
         <section className="w-full xl:w-1/2">
-          <h2 className="font-bold text-2xl md:text-3xl text-center my-2 lg:my-4">
-            <AnimatedValue value={summaryTotal}>
-              {campaignTitle}:{" "}
-              <span className="text-amber-300 text-shadow-md">
-                {summaryTotal.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                  maximumFractionDigits: 0,
-                }) || 0}
-              </span>
-            </AnimatedValue>
+          <h2 className="font-bold text-xl md:text-3xl text-center my-2 lg:my-4">
+            <AnimatedValue value={summaryTotal}>{campaignTitle} </AnimatedValue>
           </h2>
-          <div className="justify-center gap-4 mt-2 flex lg:hidden">
-            {summaryRows.map((row, index) => (
-              <div
-                key={`count-${row.source}-${index}`}
-                className="flex items-center gap-2"
-              >
-                {/* <div
-                  className="w-3 h-3 rounded"
-                  style={{
-                    backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
-                  }}
-                ></div> */}
-                <span className="text-white text-xl font-semibold">
-                  <AnimatedValue
-                    value={row.count}
-                    key={`count-legend-${row.source}`}
-                  >
-                    <span className="text-lg">{row.source}</span>:{" "}
-                    <span className="text-amber-300 text-shadow-md">
-                      {row.count?.toLocaleString()}
-                    </span>
-                  </AnimatedValue>
-                </span>
-              </div>
-            ))}
+          <div className="mt-2 lg:hidden flex justify-center">
+            <table className="text-white text-md">
+              <thead>
+                <tr>
+                  <th className="text-left text-sm font-semibold pb-2 pr-4"></th>
+                  {summaryRows.map((row, index) => (
+                    <th
+                      key={`mobile-header-${row.source}-${index}`}
+                      className="text-center text-sm font-semibold pb-2 px-3"
+                    >
+                      {row.source}
+                    </th>
+                  ))}
+                  <th className="text-center text-sm font-semibold pb-2 pl-3">
+                    Total
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="text-sm font-semibold py-1 text-left pr-4">
+                    Amount
+                  </td>
+                  {summaryRows.map((row, index) => (
+                    <td
+                      key={`mobile-amount-${row.source}-${index}`}
+                      className="text-center py-1 px-3"
+                    >
+                      <AnimatedValue
+                        value={row.rawAmount}
+                        key={`mobile-amount-value-${row.source}`}
+                      >
+                        <span className="text-amber-300 text-shadow-md text-xl font-semibold">
+                          {row.rawAmount?.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                            maximumFractionDigits: 0,
+                          })}
+                        </span>
+                      </AnimatedValue>
+                    </td>
+                  ))}
+                  <td className="text-center py-1 pl-3">
+                    <AnimatedValue
+                      value={summaryRows.reduce(
+                        (sum, row) => sum + (row.rawAmount || 0),
+                        0
+                      )}
+                      key="mobile-total-amount"
+                    >
+                      <span className="text-amber-300 text-shadow-md text-xl font-semibold">
+                        {summaryRows
+                          .reduce((sum, row) => sum + (row.rawAmount || 0), 0)
+                          .toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                            maximumFractionDigits: 0,
+                          })}
+                      </span>
+                    </AnimatedValue>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-sm font-semibold py-1 text-left pr-4">
+                    Count
+                  </td>
+                  {summaryRows.map((row, index) => (
+                    <td
+                      key={`mobile-count-${row.source}-${index}`}
+                      className="text-center py-1 px-3"
+                    >
+                      <AnimatedValue
+                        value={row.count}
+                        key={`mobile-count-value-${row.source}`}
+                      >
+                        <span className="text-amber-300 text-shadow-md text-xl font-semibold">
+                          {row.count?.toLocaleString()}
+                        </span>
+                      </AnimatedValue>
+                    </td>
+                  ))}
+                  <td className="text-center py-1 pl-3">
+                    <AnimatedValue
+                      value={summaryRows.reduce(
+                        (sum, row) => sum + (row.count || 0),
+                        0
+                      )}
+                      key="mobile-total-count"
+                    >
+                      <span className="text-amber-300 text-shadow-md text-xl font-semibold">
+                        {summaryRows
+                          .reduce((sum, row) => sum + (row.count || 0), 0)
+                          .toLocaleString()}
+                      </span>
+                    </AnimatedValue>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div className="justify-center gap-4 mt-2 flex lg:hidden">
-            {summaryRows.map((row, index) => (
-              <div
-                key={`amount-${row.source}-${index}`}
-                className="flex items-center gap-2"
-              >
-                {/* <div
-                  className="w-3 h-3 rounded"
-                  style={{
-                    backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
-                  }}
-                ></div> */}
-                <span className="text-white text-lg font-semibold">
-                  <AnimatedValue
-                    value={row.rawAmount}
-                    key={`amount-legend-${row.source}`}
-                  >
-                    <span className="text-lg">{row.source}</span>:{" "}
-                    <span className="text-amber-300 text-shadow-md">
-                      {row.rawAmount?.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                        maximumFractionDigits: 0,
-                      })}
-                    </span>
-                  </AnimatedValue>
-                </span>
-              </div>
-            ))}
-          </div>
+
           <div className="font-bold">
             <table className="table w-full text-sm md:text-xl table-fixed compact">
               <thead>
@@ -150,7 +186,7 @@ export default function DashboardClient({
                       faded: { innerRadius: 20, additionalRadius: -20 },
                     },
                   ]}
-                  width={240}
+                  width={200}
                   height={180}
                   sx={{
                     [`& .${pieArcLabelClasses.root}`]: {
@@ -166,38 +202,6 @@ export default function DashboardClient({
                     },
                   }}
                 />
-              </div>
-
-              <div className="justify-center gap-2 lg:gap-4 mt-1 hidden lg:flex">
-                {summaryRows.map((row, index) => (
-                  <div
-                    key={`count-${row.source}-${index}`}
-                    className="flex items-center gap-1 lg:gap-2"
-                  >
-                    <div
-                      className="w-2 h-2 lg:w-3 lg:h-3 rounded"
-                      style={{
-                        backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
-                      }}
-                    ></div>
-                    <span className="text-white text-sm lg:text-xl font-semibold">
-                      <AnimatedValue
-                        value={row.count}
-                        key={`count-legend-${row.source}`}
-                      >
-                        <div className="">
-                          <span className="text-xs lg:text-lg">
-                            {row.source}
-                          </span>
-                          :{" "}
-                          <span className="text-amber-300 text-shadow-md">
-                            {row.count?.toLocaleString()}
-                          </span>
-                        </div>
-                      </AnimatedValue>
-                    </span>
-                  </div>
-                ))}
               </div>
             </div>
 
@@ -216,7 +220,7 @@ export default function DashboardClient({
                       faded: { innerRadius: 20, additionalRadius: -20 },
                     },
                   ]}
-                  width={240}
+                  width={200}
                   height={180}
                   sx={{
                     [`& .${pieArcLabelClasses.root}`]: {
@@ -233,27 +237,42 @@ export default function DashboardClient({
                   }}
                 />
               </div>
+            </div>
+          </div>
 
-              <div className="hidden justify-center gap-2 lg:gap-4 mt-1 lg:flex">
-                {summaryRows.map((row, index) => (
-                  <div
-                    key={`amount-${row.source}-${index}`}
-                    className="flex items-center gap-1 lg:gap-2"
-                  >
-                    <div
-                      className="w-2 h-2 lg:w-3 lg:h-3 rounded"
-                      style={{
-                        backgroundColor: index === 0 ? "#3b82f6" : "#10b981",
-                      }}
-                    ></div>
-                    <span className="text-white text-sm lg:text-2xl font-semibold">
+          <div className="mt-2 hidden lg:flex justify-center">
+            <table className="text-white">
+              <thead>
+                <tr>
+                  <th className="text-left text-lg font-semibold pb-2 pr-6"></th>
+                  {summaryRows.map((row, index) => (
+                    <th
+                      key={`desktop-header-${row.source}-${index}`}
+                      className="text-center text-lg font-semibold pb-2 px-4"
+                    >
+                      {row.source}
+                    </th>
+                  ))}
+                  <th className="text-center text-lg font-semibold pb-2 pl-4">
+                    Total
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="text-lg font-semibold py-2 text-left pr-6">
+                    Amount
+                  </td>
+                  {summaryRows.map((row, index) => (
+                    <td
+                      key={`desktop-amount-${row.source}-${index}`}
+                      className="text-center py-2 px-4"
+                    >
                       <AnimatedValue
                         value={row.rawAmount}
-                        key={`amount-legend-${row.source}`}
+                        key={`desktop-amount-value-${row.source}`}
                       >
-                        <span className="text-xs lg:text-lg">{row.source}</span>
-                        :{" "}
-                        <span className="text-amber-300 text-shadow-md">
+                        <span className="text-amber-300 text-shadow-md text-lg font-semibold">
                           {row.rawAmount?.toLocaleString("en-US", {
                             style: "currency",
                             currency: "USD",
@@ -261,11 +280,65 @@ export default function DashboardClient({
                           })}
                         </span>
                       </AnimatedValue>
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
+                    </td>
+                  ))}
+                  <td className="text-center py-2 pl-4">
+                    <AnimatedValue
+                      value={summaryRows.reduce(
+                        (sum, row) => sum + (row.rawAmount || 0),
+                        0
+                      )}
+                      key="desktop-total-amount"
+                    >
+                      <span className="text-amber-300 text-shadow-md text-lg font-semibold">
+                        {summaryRows
+                          .reduce((sum, row) => sum + (row.rawAmount || 0), 0)
+                          .toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                            maximumFractionDigits: 0,
+                          })}
+                      </span>
+                    </AnimatedValue>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-lg font-semibold py-2 text-left pr-6">
+                    Count
+                  </td>
+                  {summaryRows.map((row, index) => (
+                    <td
+                      key={`desktop-count-${row.source}-${index}`}
+                      className="text-center py-2 px-4"
+                    >
+                      <AnimatedValue
+                        value={row.count}
+                        key={`desktop-count-value-${row.source}`}
+                      >
+                        <span className="text-amber-300 text-shadow-md text-xl font-semibold">
+                          {row.count?.toLocaleString()}
+                        </span>
+                      </AnimatedValue>
+                    </td>
+                  ))}
+                  <td className="text-center py-2 pl-4">
+                    <AnimatedValue
+                      value={summaryRows.reduce(
+                        (sum, row) => sum + (row.count || 0),
+                        0
+                      )}
+                      key="desktop-total-count"
+                    >
+                      <span className="text-amber-300 text-shadow-md text-xl font-semibold">
+                        {summaryRows
+                          .reduce((sum, row) => sum + (row.count || 0), 0)
+                          .toLocaleString()}
+                      </span>
+                    </AnimatedValue>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </section>
       </div>
@@ -286,7 +359,7 @@ export default function DashboardClient({
           )}
         </div>
         <div className="flex flex-col items-center justify-center my-1 gap-1 lg:my-2 lg:gap-2 lg:flex-row">
-          <div className="font-bold text-lg lg:text-4xl text-secondary">
+          <div className="font-bold text-2xl lg:text-4xl text-secondary">
             <AnimatedValue
               value={dashboardData?.tickTotal?.amount}
               animationType="value-changed-currency"
@@ -297,21 +370,8 @@ export default function DashboardClient({
                 currency: "USD",
                 maximumFractionDigits: 0,
               }) || 0}
+              &nbsp;| Web : {tickWebPercent}
             </AnimatedValue>
-          </div>
-          <div
-            className="font-bold radial-progress bg-primary text-primary-content border-primary border-4 flex-col items-center justify-center hidden lg:flex"
-            style={{ "--value": tickWebPercent }}
-            aria-valuenow={tickWebPercent}
-            role="progressbar"
-          >
-            <AnimatedValue
-              value={tickWebPercent}
-              className="block leading-none"
-            >
-              {tickWebPercent}%
-            </AnimatedValue>
-            <span className="block text-xs lg:text-sm">web</span>
           </div>
         </div>
       </div>
