@@ -15,17 +15,20 @@ async function getSfAuth() {
   if (sfToken && Date.now() < sfExpiresAt - 5000) {
     return { accessToken: sfToken, instanceUrl: sfInstanceUrl };
   }
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/api/auth-token`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/api/auth-token`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      cache: "no-store",
+    }
+  );
   const json = await res.json();
   if (!json.success) throw new Error(json.details || "Auth failed");
 
   sfToken = json.access_token;
   sfInstanceUrl = json.instance_url;
-  sfExpiresAt = json.expires_at ?? (Date.now() + 60_000); // fallback
+  sfExpiresAt = json.expires_at ?? Date.now() + 60_000; // fallback
   return { accessToken: sfToken, instanceUrl: sfInstanceUrl };
 }
 
@@ -63,8 +66,8 @@ export async function GET(request) {
       const invalid =
         status === 401 &&
         (body?.errorCode === "INVALID_SESSION_ID" ||
-         body?.[0]?.errorCode === "INVALID_SESSION_ID" ||
-         `${body?.message ?? ""}`.includes("INVALID_SESSION_ID"));
+          body?.[0]?.errorCode === "INVALID_SESSION_ID" ||
+          `${body?.message ?? ""}`.includes("INVALID_SESSION_ID"));
 
       if (!invalid) throw e;
 
@@ -78,9 +81,12 @@ export async function GET(request) {
     // Cache window from Flow output
     const dashboardData = resp.data?.[0]?.outputValues;
     const s = Number(dashboardData?.refreshInterval);
-    currentCacheDuration = s > 0 ? s * 1000 : 5000;
+    const newCacheDuration = s > 0 ? s * 1000 : 5000;
 
-    // Cache the response data
+    // Update the global cache duration to follow refreshInterval
+    currentCacheDuration = newCacheDuration;
+
+    // Cache the response data with the new duration
     cachedData = resp.data;
     cacheExpiresAt = Date.now() + currentCacheDuration;
 
@@ -91,13 +97,16 @@ export async function GET(request) {
       cacheDuration: currentCacheDuration,
     });
   } catch (error) {
-    console.error("Ticker fetch failed:", error?.response?.data || error?.message);
+    console.error(
+      "Ticker fetch failed:",
+      error?.response?.data || error?.message
+    );
 
     return NextResponse.json(
       {
         success: false,
         error: "Something went wrong with data fetching",
-        details: 
+        details:
           error?.response?.data?.[0]?.message ||
           error?.response?.data?.error_description ||
           error?.message,
