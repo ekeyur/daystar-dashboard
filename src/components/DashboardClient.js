@@ -24,7 +24,7 @@ export default function DashboardClient({
           <h2 className="font-bold text-xl md:text-3xl text-center my-2 lg:my-4">
             <AnimatedValue value={summaryTotal}>{campaignTitle} </AnimatedValue>
           </h2>
-          <div className="mt-2 lg:hidden flex justify-center">
+          <div className="mt-2 lg:hidden flex justify-center px-2">
             <table className="text-white text-md">
               <thead>
                 <tr>
