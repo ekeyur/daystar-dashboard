@@ -22,9 +22,9 @@ export default function DashboardClient({
       <div className="flex flex-col xl:flex-row items-center gap-4 w-full mt-1 lg:mt-4 bg-blue-800 rounded-xl shadow-md px-2 md:px-12">
         <section className="w-full xl:w-1/2">
           <h2 className="font-bold text-xl md:text-3xl text-center my-2 lg:my-4">
-            <AnimatedValue value={summaryTotal}>{campaignTitle} </AnimatedValue>
+            <AnimatedValue value={summaryTotal}>{campaignTitle}</AnimatedValue>
           </h2>
-          <div className="mt-2 lg:hidden flex justify-center px-2">
+          <div className="mt-2 lg:hidden flex justify-center px-4">
             <table className="text-white text-md">
               <thead>
                 <tr>
@@ -44,7 +44,7 @@ export default function DashboardClient({
               </thead>
               <tbody>
                 <tr>
-                  <td className="text-md font-semibold py-1 text-left pr-4">
+                  <td className="text-sm font-semibold py-1 text-left pr-4">
                     AMOUNT
                   </td>
                   {summaryRows.map((row, index) => (
@@ -56,7 +56,7 @@ export default function DashboardClient({
                         value={row.rawAmount}
                         key={`mobile-amount-value-${row.source}`}
                       >
-                        <span className="text-amber-300 text-shadow-md text-xl font-semibold">
+                        <span className="text-amber-300 text-shadow-md text-lg font-semibold">
                           {row.rawAmount?.toLocaleString("en-US", {
                             style: "currency",
                             currency: "USD",
@@ -74,7 +74,7 @@ export default function DashboardClient({
                       )}
                       key="mobile-total-amount"
                     >
-                      <span className="text-amber-300 text-shadow-md text-xl font-semibold">
+                      <span className="text-amber-300 text-shadow-md text-lg font-semibold">
                         {summaryRows
                           .reduce((sum, row) => sum + (row.rawAmount || 0), 0)
                           .toLocaleString("en-US", {
@@ -87,7 +87,7 @@ export default function DashboardClient({
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-md font-semibold py-1 text-left pr-4">
+                  <td className="text-sm font-semibold py-1 text-left pr-4">
                     COUNT
                   </td>
                   {summaryRows.map((row, index) => (
