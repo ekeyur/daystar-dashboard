@@ -32,7 +32,6 @@ function Header() {
             height={50}
           />
         </div>
-        <div className="navbar-center hidden lg:flex"></div>
         <div className="navbar-end">
           <div className="flex items-end flex-row font-bold gap-1">
             <div className="text-xs leading-tight md:text-lg flex gap-1 md:gap-4 items-center">

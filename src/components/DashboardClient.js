@@ -380,6 +380,13 @@ export default function DashboardClient({
           </div>
         </section>
       </div>
+      <div className="mt-2 flex justify-center">
+        {process.env.NEXT_PUBLIC_ENV !== "PROD" && (
+          <div className="navbar-center flex text-blue-400 text-sm">
+            {process.env.NEXT_PUBLIC_ENV}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
