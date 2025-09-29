@@ -233,7 +233,7 @@ export default function DashboardClient({
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-lg font-semibold py-2 text-left pr-6">
+                  <td className="text-xl font-semibold py-2 text-left pr-6">
                     COUNT
                   </td>
                   {summaryRows.map((row, index) => (
@@ -299,11 +299,13 @@ export default function DashboardClient({
                 currency: "USD",
                 maximumFractionDigits: 0,
               }) || 0}
-              &nbsp; | &nbsp;
+              &nbsp; <span className="text-white">|</span> &nbsp;
               <AnimatedValue value={tickTotals.total}>
                 {tickTotals.total?.toLocaleString() || 0}
               </AnimatedValue>
-              &nbsp; | &nbsp; Web : {tickWebPercent}%
+              &nbsp; <span className="text-white">|</span> &nbsp;{" "}
+              <span className="text-white"> Web:&nbsp;</span>
+              {tickWebPercent}%
             </AnimatedValue>
           </div>
         </div>
