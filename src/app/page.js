@@ -14,6 +14,7 @@ export default function Home() {
     isLoading,
     error,
     isHydrated,
+    colors,
   } = useDashboardData();
 
   if (!isHydrated) {
@@ -89,6 +90,7 @@ export default function Home() {
       tickWebPercent={tickWebPercent}
       pieChartDataCount={pieChartDataCount}
       pieChartDataAmount={pieChartDataAmount}
+      colors={colors}
     />
   );
 }

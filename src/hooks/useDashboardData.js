@@ -1,23 +1,23 @@
-import useSWR from 'swr';
-import { useAuth } from '@/contexts/authcontext';
-import { useState, useEffect } from 'react';
+import useSWR from "swr";
+import { useAuth } from "@/contexts/authcontext";
+import { useState, useEffect } from "react";
 
 const fetcher = async (url, token) => {
   const response = await fetch(url, {
     headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
   });
 
   if (!response.ok) {
-    throw new Error('Failed to fetch dashboard data');
+    throw new Error("Failed to fetch dashboard data");
   }
 
   const data = await response.json();
 
   if (!data.success) {
-    throw new Error(data.error || 'Failed to fetch dashboard data');
+    throw new Error(data.error || "Failed to fetch dashboard data");
   }
 
   const dashboardData = data.result?.[0]?.outputValues || {};
@@ -33,8 +33,13 @@ export function useDashboardData() {
   const { accessToken, isHydrated } = useAuth();
   const [refreshInterval, setRefreshInterval] = useState(5000); // Default 5 seconds
 
-  const { data: responseData, error, isLoading, mutate } = useSWR(
-    isHydrated && accessToken ? ['/api/live-ticker-data', accessToken] : null,
+  const {
+    data: responseData,
+    error,
+    isLoading,
+    mutate,
+  } = useSWR(
+    isHydrated && accessToken ? ["/api/live-ticker-data", accessToken] : null,
     ([url, token]) => fetcher(url, token),
     {
       refreshInterval, // Use dynamic refresh interval
@@ -49,7 +54,11 @@ export function useDashboardData() {
 
   // Update refresh interval when we get new data
   useEffect(() => {
-    if (responseData?.refreshInterval && typeof responseData.refreshInterval === 'number' && responseData.refreshInterval > 0) {
+    if (
+      responseData?.refreshInterval &&
+      typeof responseData.refreshInterval === "number" &&
+      responseData.refreshInterval > 0
+    ) {
       const newInterval = responseData.refreshInterval * 1000; // Convert seconds to milliseconds
       if (newInterval !== refreshInterval) {
         setRefreshInterval(newInterval);
@@ -65,5 +74,11 @@ export function useDashboardData() {
     error,
     refreshInterval: refreshInterval / 1000, // Return in seconds for debugging
     isHydrated,
+    colors: {
+      colorOne: responseData?.colorOne,
+      colorTwo: responseData?.colorTwo,
+      bgColorOne: responseData?.bgColorOne,
+      bgColorTwo: responseData?.bgColorTwo,
+    },
   };
 }

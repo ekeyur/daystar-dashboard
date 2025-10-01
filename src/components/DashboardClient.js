@@ -13,9 +13,14 @@ export default function DashboardClient({
   summaryRows,
   summaryTotal,
   tickWebPercent,
-  pieChartDataCount,
-  pieChartDataAmount,
 }) {
+  if (dashboardData.isError) {
+    return (
+      <span className="flex justify-center items-center h-100 text-3xl text-accent">
+        {dashboardData.errorMessage}
+      </span>
+    );
+  }
   return (
     <div className="">
       <Header />
@@ -25,7 +30,7 @@ export default function DashboardClient({
             <AnimatedValue value={summaryTotal}>{campaignTitle}</AnimatedValue>
           </h2>
           <div className="mt-2 lg:hidden flex justify-center px-4">
-            <table className="text-white text-md">
+            <table className="text-primary text-md">
               <thead>
                 <tr>
                   <th className="text-left text-sm font-semibold pb-2 pr-4"></th>
@@ -56,7 +61,7 @@ export default function DashboardClient({
                         value={row.rawAmount}
                         key={`mobile-amount-value-${row.source}`}
                       >
-                        <span className="text-amber-300 text-shadow-md text-lg font-semibold">
+                        <span className="text-accent text-shadow-md text-lg font-semibold">
                           {row.rawAmount?.toLocaleString("en-US", {
                             style: "currency",
                             currency: "USD",
@@ -74,7 +79,7 @@ export default function DashboardClient({
                       )}
                       key="mobile-total-amount"
                     >
-                      <span className="text-amber-300 text-shadow-md text-lg font-semibold">
+                      <span className="text-accent text-shadow-md text-lg font-semibold">
                         {summaryRows
                           .reduce((sum, row) => sum + (row.rawAmount || 0), 0)
                           .toLocaleString("en-US", {
@@ -99,7 +104,7 @@ export default function DashboardClient({
                         value={row.count}
                         key={`mobile-count-value-${row.source}`}
                       >
-                        <span className="text-amber-300 text-shadow-md text-xl font-semibold">
+                        <span className="text-accent text-shadow-md text-xl font-semibold">
                           {row.count?.toLocaleString()}
                         </span>
                       </AnimatedValue>
@@ -113,7 +118,7 @@ export default function DashboardClient({
                       )}
                       key="mobile-total-count"
                     >
-                      <span className="text-amber-300 text-shadow-md text-xl font-semibold">
+                      <span className="text-accent text-shadow-md text-xl font-semibold">
                         {summaryRows
                           .reduce((sum, row) => sum + (row.count || 0), 0)
                           .toLocaleString()}
@@ -171,7 +176,7 @@ export default function DashboardClient({
 
         <section className="w-full xl:w-1/2 mb-4">
           <div className="mt-2 hidden lg:flex justify-center">
-            <table className="text-white">
+            <table className="text-primary">
               <thead>
                 <tr>
                   <th className="text-left font-semibold pb-2 pr-6"></th>
@@ -202,7 +207,7 @@ export default function DashboardClient({
                         value={row.rawAmount}
                         key={`desktop-amount-value-${row.source}`}
                       >
-                        <span className="text-amber-300 text-shadow-md text-3xl font-semibold">
+                        <span className="text-accent text-shadow-md text-3xl font-semibold">
                           {row.rawAmount?.toLocaleString("en-US", {
                             style: "currency",
                             currency: "USD",
@@ -220,7 +225,7 @@ export default function DashboardClient({
                       )}
                       key="desktop-total-amount"
                     >
-                      <span className="text-amber-300 text-shadow-md text-3xl font-semibold">
+                      <span className="text-accent text-shadow-md text-3xl font-semibold">
                         {summaryRows
                           .reduce((sum, row) => sum + (row.rawAmount || 0), 0)
                           .toLocaleString("en-US", {
@@ -245,7 +250,7 @@ export default function DashboardClient({
                         value={row.count}
                         key={`desktop-count-value-${row.source}`}
                       >
-                        <span className="text-amber-300 text-shadow-md text-3xl font-semibold">
+                        <span className="text-accent text-shadow-md text-3xl font-semibold">
                           {row.count?.toLocaleString()}
                         </span>
                       </AnimatedValue>
@@ -259,7 +264,7 @@ export default function DashboardClient({
                       )}
                       key="desktop-total-count"
                     >
-                      <span className="text-amber-300 text-shadow-md text-3xl font-semibold">
+                      <span className="text-accent text-shadow-md text-3xl font-semibold">
                         {summaryRows
                           .reduce((sum, row) => sum + (row.count || 0), 0)
                           .toLocaleString()}
@@ -289,7 +294,7 @@ export default function DashboardClient({
           )}
         </div>
         <div className="flex flex-col items-center justify-center my-1 gap-1 lg:my-2 lg:gap-2 lg:flex-row">
-          <div className="font-bold text-2xl lg:text-4xl text-amber-300">
+          <div className="font-bold text-2xl lg:text-4xl text-accent">
             <AnimatedValue
               value={dashboardData?.tickTotal?.amount}
               animationType="value-changed-currency"
@@ -299,12 +304,12 @@ export default function DashboardClient({
                 currency: "USD",
                 maximumFractionDigits: 0,
               }) || 0}
-              &nbsp; <span className="text-white">|</span> &nbsp;
+              &nbsp; <span className="text-primary">|</span> &nbsp;
               <AnimatedValue value={tickTotals.total}>
                 {tickTotals.total?.toLocaleString() || 0}
               </AnimatedValue>
-              &nbsp; <span className="text-white">|</span> &nbsp;{" "}
-              <span className="text-white"> Web:&nbsp;</span>
+              &nbsp; <span className="text-primary">|</span> &nbsp;{" "}
+              <span className="text-primary"> Web:&nbsp;</span>
               {tickWebPercent}%
             </AnimatedValue>
           </div>
