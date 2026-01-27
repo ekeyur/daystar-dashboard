@@ -50,7 +50,7 @@ export default function DashboardClient({
                   {summaryRows.map((row, index) => (
                     <td
                       key={`mobile-amount-${row.source}-${index}`}
-                      className="text-right py-1 px-3"
+                      className="text-right py-1"
                     >
                       <AnimatedValue
                         value={row.rawAmount}
