@@ -85,7 +85,7 @@ export default function DashboardClient({
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-xs font-normal py-0.5 text-left pr-4 text-white/70 pl-2">
+                  <td className="text-xs font-normal py-0.5 text-left pr-4 text-white/70 pl-2 whitespace-nowrap">
                     ↳ General
                   </td>
                   {summaryRows.map((row, index) => (
@@ -115,7 +115,7 @@ export default function DashboardClient({
                   </td>
                 </tr>
                 <tr>
-                  <td className="text-xs font-normal py-0.5 text-left pr-4 text-white/70 pl-2">
+                  <td className="text-xs font-normal py-0.5 text-left pr-4 text-white/70 pl-2 whitespace-nowrap">
                     ↳ Israel
                   </td>
                   {summaryRows.map((row, index) => (

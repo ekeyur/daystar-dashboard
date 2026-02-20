@@ -30,7 +30,7 @@ const fetcher = async (url, token) => {
 };
 
 export function useDashboardData() {
-  const { accessToken, isHydrated } = useAuth();
+  const { accessToken, isHydrated, loading: authLoading } = useAuth();
   const [refreshInterval, setRefreshInterval] = useState(5000); // Default 5 seconds
 
   const { data: responseData, error, isLoading, mutate } = useSWR(
@@ -61,7 +61,7 @@ export function useDashboardData() {
 
   return {
     data: responseData?.data || {},
-    isLoading,
+    isLoading: isLoading || authLoading,
     error,
     refreshInterval: refreshInterval / 1000, // Return in seconds for debugging
     isHydrated,
