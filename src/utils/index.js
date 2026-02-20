@@ -69,6 +69,12 @@ export const extractSummaryData = (dashboardData) => {
   const totalCount = summaryNonWebCount + summaryWebCount;
   const totalAmount = dashboardData?.tickTotal?.valueForDisplay || "$0";
 
+  // Israel breakdown amounts
+  const liveIsraelAmount = dashboardData?.summaryNonWebIsrael?.amount || 0;
+  const webIsraelAmount = dashboardData?.summaryWebTotalIsrael?.amount || 0;
+  const liveTotalAmount = dashboardData?.summaryNonWebTotal?.amount || 0;
+  const webTotalAmount = dashboardData?.summaryWebTotal?.amount || 0;
+
   // Calculate percentages
   const livePercent =
     totalCount > 0 ? Math.round((summaryNonWebCount / totalCount) * 100) : 0;
@@ -81,14 +87,18 @@ export const extractSummaryData = (dashboardData) => {
       count: summaryNonWebCount,
       percent: livePercent,
       amount: summaryNonWebTotal,
-      rawAmount: dashboardData?.summaryNonWebTotal?.amount || 0,
+      rawAmount: liveTotalAmount,
+      israelAmount: liveIsraelAmount,
+      generalAmount: liveTotalAmount - liveIsraelAmount,
     },
     {
       source: dashboardData?.summaryWebLabel || "WEB",
       count: summaryWebCount,
       percent: webPercent,
       amount: summaryWebTotal,
-      rawAmount: dashboardData?.summaryWebTotal?.amount || 0,
+      rawAmount: webTotalAmount,
+      israelAmount: webIsraelAmount,
+      generalAmount: webTotalAmount - webIsraelAmount,
     },
   ];
 

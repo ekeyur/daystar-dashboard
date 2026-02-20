@@ -13,8 +13,6 @@ export default function DashboardClient({
   summaryRows,
   summaryTotal,
   tickWebPercent,
-  pieChartDataCount,
-  pieChartDataAmount,
 }) {
   return (
     <div className="">
@@ -70,7 +68,7 @@ export default function DashboardClient({
                     <AnimatedValue
                       value={summaryRows.reduce(
                         (sum, row) => sum + (row.rawAmount || 0),
-                        0
+                        0,
                       )}
                       key="mobile-total-amount"
                     >
@@ -85,6 +83,46 @@ export default function DashboardClient({
                       </span>
                     </AnimatedValue>
                   </td>
+                </tr>
+                <tr>
+                  <td className="text-xs font-normal py-0.5 text-left pr-4 text-white/70 pl-2">
+                    ↳ General
+                  </td>
+                  {summaryRows.map((row, index) => (
+                    <td
+                      key={`mobile-general-${row.source}-${index}`}
+                      className="text-right py-0.5 px-3"
+                    >
+                      <span className="text-amber-300 text-sm font-semibold">
+                        {row.generalAmount?.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          maximumFractionDigits: 0,
+                        })}
+                      </span>
+                    </td>
+                  ))}
+                  <td></td>
+                </tr>
+                <tr>
+                  <td className="text-xs font-normal py-0.5 text-left pr-4 text-white/70 pl-2">
+                    ↳ Israel
+                  </td>
+                  {summaryRows.map((row, index) => (
+                    <td
+                      key={`mobile-israel-${row.source}-${index}`}
+                      className="text-right py-0.5 px-3"
+                    >
+                      <span className="text-amber-300 text-sm font-semibold">
+                        {row.israelAmount?.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          maximumFractionDigits: 0,
+                        })}
+                      </span>
+                    </td>
+                  ))}
+                  <td></td>
                 </tr>
                 <tr>
                   <td className="text-sm font-semibold py-1 text-left pr-4">
@@ -109,7 +147,7 @@ export default function DashboardClient({
                     <AnimatedValue
                       value={summaryRows.reduce(
                         (sum, row) => sum + (row.count || 0),
-                        0
+                        0,
                       )}
                       key="mobile-total-count"
                     >
@@ -216,7 +254,7 @@ export default function DashboardClient({
                     <AnimatedValue
                       value={summaryRows.reduce(
                         (sum, row) => sum + (row.rawAmount || 0),
-                        0
+                        0,
                       )}
                       key="desktop-total-amount"
                     >
@@ -231,6 +269,46 @@ export default function DashboardClient({
                       </span>
                     </AnimatedValue>
                   </td>
+                </tr>
+                <tr>
+                  <td className="text-sm font-normal py-1 text-left pr-6 text-white/70 pl-3">
+                    ↳ General
+                  </td>
+                  {summaryRows.map((row, index) => (
+                    <td
+                      key={`desktop-general-${row.source}-${index}`}
+                      className="text-right py-1 px-4"
+                    >
+                      <span className="text-amber-300 text-xl font-semibold">
+                        {row.generalAmount?.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          maximumFractionDigits: 0,
+                        })}
+                      </span>
+                    </td>
+                  ))}
+                  <td></td>
+                </tr>
+                <tr>
+                  <td className="text-sm font-normal py-1 text-left pr-6 text-white/70 pl-3">
+                    ↳ Israel
+                  </td>
+                  {summaryRows.map((row, index) => (
+                    <td
+                      key={`desktop-israel-${row.source}-${index}`}
+                      className="text-right py-1 px-4"
+                    >
+                      <span className="text-amber-300 text-xl font-semibold">
+                        {row.israelAmount?.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          maximumFractionDigits: 0,
+                        })}
+                      </span>
+                    </td>
+                  ))}
+                  <td></td>
                 </tr>
                 <tr>
                   <td className="text-xl font-semibold py-2 text-left pr-6">
@@ -255,7 +333,7 @@ export default function DashboardClient({
                     <AnimatedValue
                       value={summaryRows.reduce(
                         (sum, row) => sum + (row.count || 0),
-                        0
+                        0,
                       )}
                       key="desktop-total-count"
                     >
