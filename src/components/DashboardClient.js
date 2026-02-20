@@ -102,7 +102,17 @@ export default function DashboardClient({
                       </span>
                     </td>
                   ))}
-                  <td></td>
+                  <td className="text-right py-0.5 pl-3">
+                    <span className="text-amber-300 text-sm font-semibold">
+                      {summaryRows
+                        .reduce((sum, row) => sum + (row.generalAmount || 0), 0)
+                        .toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          maximumFractionDigits: 0,
+                        })}
+                    </span>
+                  </td>
                 </tr>
                 <tr>
                   <td className="text-xs font-normal py-0.5 text-left pr-4 text-white/70 pl-2">
@@ -122,7 +132,17 @@ export default function DashboardClient({
                       </span>
                     </td>
                   ))}
-                  <td></td>
+                  <td className="text-right py-0.5 pl-3">
+                    <span className="text-amber-300 text-sm font-semibold">
+                      {summaryRows
+                        .reduce((sum, row) => sum + (row.israelAmount || 0), 0)
+                        .toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          maximumFractionDigits: 0,
+                        })}
+                    </span>
+                  </td>
                 </tr>
                 <tr>
                   <td className="text-sm font-semibold py-1 text-left pr-4">
@@ -288,7 +308,17 @@ export default function DashboardClient({
                       </span>
                     </td>
                   ))}
-                  <td></td>
+                  <td className="text-right py-1 pl-4">
+                    <span className="text-amber-300 text-xl font-semibold">
+                      {summaryRows
+                        .reduce((sum, row) => sum + (row.generalAmount || 0), 0)
+                        .toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          maximumFractionDigits: 0,
+                        })}
+                    </span>
+                  </td>
                 </tr>
                 <tr>
                   <td className="text-sm font-normal py-1 text-left pr-6 text-white/70 pl-3">
@@ -308,7 +338,17 @@ export default function DashboardClient({
                       </span>
                     </td>
                   ))}
-                  <td></td>
+                  <td className="text-right py-1 pl-4">
+                    <span className="text-amber-300 text-xl font-semibold">
+                      {summaryRows
+                        .reduce((sum, row) => sum + (row.israelAmount || 0), 0)
+                        .toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          maximumFractionDigits: 0,
+                        })}
+                    </span>
+                  </td>
                 </tr>
                 <tr>
                   <td className="text-xl font-semibold py-2 text-left pr-6">
